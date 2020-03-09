@@ -8,7 +8,8 @@ import numpy as np
 import os
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-matches = pd.read_excel(os.path.join(__location__, 'dataset.xlsx'), sheet_name='Database')
+matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
+
 
 class Football():
 
@@ -32,17 +33,11 @@ class Football():
     def scraper(self, match_date=[], team_home=[], team_away=[], score_home=[], score_away=[]):
         start_date = datetime.strptime(matches['Date'].tail(1).tolist()[0], '%Y-%m-%d')
         yesterday = str(date.today() - timedelta(days=1))
-
-        currentDT = datetime.now()
-
-        print('Checking current database', currentDT.strftime("%H:%M:%S"))
-
+        print('Checking current database')
         if start_date != datetime.strptime(yesterday, '%Y-%m-%d'):
             end_date = datetime.strptime(str(date.today()), '%Y-%m-%d')
 
-            currentDT = datetime.now()
-
-            print('Creating list of dates to scrape', currentDT.strftime("%H:%M:%S"))
+            print('Creating list of dates to scrape')
 
             def daterange(start_date, end_date):
                 for n in range(int((end_date - start_date).days)):
@@ -54,9 +49,7 @@ class Football():
             series_hscore = []
             series_ascore = []
 
-            currentDT = datetime.now()
-
-            print('Starting the scraping process', currentDT.strftime("%H:%M:%S"))
+            print('Starting the scraping process')
 
             for single_date in daterange(start_date, end_date):
                 day = str(datetime.strptime(str(single_date)[0:10], '%Y-%m-%d'))
@@ -81,49 +74,41 @@ class Football():
                         series_date.append(str(day)[0:10])
                         series_home.append(h.text.replace(' *', ''))
                         series_away.append(a.text.replace(' *', ''))
-                        series_hscore.append(float(hs.text) / 100)
-                        series_ascore.append(float(aws.text) / 100)
+                        series_hscore.append(int(hs.text))
+                        series_ascore.append(int(aws.text))
 
                 driver.close()
-
-            currentDT = datetime.now()
 
             print('New database entries:', pd.DataFrame({'Date': series_date, 'Home': series_home, 'Away': series_away,
                                                          'HS': series_hscore, 'AS': series_ascore}), sep='\n')
 
-            currentDT = datetime.now()
-
-            print('Writing new data into the database file', currentDT.strftime("%H:%M:%S"))
+            print('Writing new data into the database file')
 
             new_matches = pd.DataFrame({'Date': series_date, 'Home Team': series_home, 'Home Score': series_hscore,
                                         'Away Team': series_away, 'Away Score': series_ascore})
             frames = [matches, new_matches]
             stats = pd.concat(frames, join='inner', ignore_index=True, sort=False)
-            writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'), engine='xlsxwriter')
+            writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'), engine='xlsxwriter')
             stats.to_excel(writer, sheet_name='Database')
             writer.save()
 
-            currentDT = datetime.now()
-
-            print('dataset.xlsx is ready', currentDT.strftime("%H:%M:%S"))
+            print('database.xlsx is ready')
 
         else:
-            currentDT = datetime.now()
-
-            print('Database is already up to date', currentDT.strftime("%H:%M:%S"))
+            print('Database is already up to date')
 
     def under05(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)))
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)))
         return float(np.array2string(result))
 
     def under15(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
         return float(np.array2string(result))
 
     def under25(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
@@ -132,13 +117,13 @@ class Football():
         return float(np.array2string(result))
 
     def btts(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
         return float(np.array2string(result))
 
     def bttsno(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
         return float(np.array2string(result))
@@ -148,9 +133,7 @@ class Football():
         home = []
         away = []
 
-        currentDT = datetime.now()
-
-        print('Calculating home averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating home averages')
 
         for h in hteam:
             home.append(h)
@@ -159,15 +142,11 @@ class Football():
             for i in range(1, len(h_index) + 1):
                 df = matches['Home Score'].iloc[h_index[0:i]].mean()
                 temp_h.append(df)
-            havg.append(round(temp_h[home.count(h) - 1] / 100, 2))
+            havg.append(temp_h[home.count(h) - 1])
 
-        currentDT = datetime.now()
+        print('Finished calculating home averages')
 
-        print('Finished calculating home averages', currentDT.strftime("%H:%M:%S"))
-
-        currentDT = datetime.now()
-
-        print('Calculating away averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating away averages')
 
         for a in ateam:
             away.append(a)
@@ -176,17 +155,13 @@ class Football():
             for i in range(1, len(a_index) + 1):
                 df = matches['Away Score'].iloc[a_index[0:i]].mean()
                 temp_a.append(df)
-            aavg.append(round(temp_a[away.count(a) - 1] / 100, 2))
+            aavg.append(temp_a[away.count(a) - 1])
 
-        currentDT = datetime.now()
-
-        print('Finished calculating away averages', currentDT.strftime("%H:%M:%S"))
+        print('Finished calculating away averages')
 
     def poissoncalc(self, havg = [], aavg = []):
 
-        currentDT = datetime.now()
-
-        print('Calculating Poisson distribution', currentDT.strftime("%H:%M:%S"))
+        print('Calculating Poisson distribution')
 
         for x, y in zip(havg, aavg):
             football.poisson_05.append(football.under05(x, y))
@@ -195,18 +170,14 @@ class Football():
             football.poisson_btts.append(football.btts(x, y))
             football.poisson_bttsno.append(football.bttsno(x, y))
 
-        currentDT = datetime.now()
-
-        print('Done calculating Poisson distribution', currentDT.strftime("%H:%M:%S"))
+        print('Done calculating Poisson distribution')
 
     def predictions(self, hteam=[], ateam=[], hscore = [], ascore = []):
 
         tomorrow = str(date.today() + timedelta(days=1))
         url = 'https://www.livescore.com/soccer/' + tomorrow
 
-        currentDT = datetime.now()
-
-        print('Initializing Chrome', currentDT.strftime("%H:%M:%S"))
+        print('Initializing Chrome')
 
         options = Options()
         options.headless = True
@@ -214,18 +185,14 @@ class Football():
         driver.get(url)
         driver.set_page_load_timeout(10)
 
-        currentDT = datetime.now()
-
-        print("Extracting Tomorrow's matches", currentDT.strftime("%H:%M:%S"))
+        print("Extracting Tomorrow's matches")
 
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         homeT = pd.Series([x.text for x in soup.find_all('div', class_='ply tright name') if x.text != '__home_team__'])
         awayT = pd.Series([x.text for x in soup.find_all('div', class_='ply name') if x.text != '__away_team__'])
         driver.close()
 
-        currentDT = datetime.now()
-
-        print('Matches extracted', currentDT.strftime("%H:%M:%S"))
+        print('Matches extracted')
 
         empty = pd.Series([np.NaN for x in homeT])
         hteam.append(homeT)
@@ -240,17 +207,13 @@ class Football():
         btts = []
         bttsno = []
 
-        currentDT = datetime.now()
-
-        print('Calculating averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating averages')
 
         for h, a in zip(homeT, awayT):
             haverage.append(matches[matches['Home Team'] == h]['Home Score'].mean())
             aaverage.append(matches[matches['Away Team'] == a]['Away Score'].mean())
 
-        currentDT = datetime.now()
-
-        print('Calculating Poisson distributions', currentDT.strftime("%H:%M:%S"))
+        print('Calculating Poisson distributions')
 
         for x, y in zip(haverage, aaverage):
             u05.append(football.under05(x, y))
@@ -259,9 +222,7 @@ class Football():
             btts.append(football.btts(x, y))
             bttsno.append(football.bttsno(x, y))
 
-        currentDT = datetime.now()
-
-        print('Writing output on predictions.xlsx', currentDT.strftime("%H:%M:%S"))
+        print('Writing output on predictions.xlsx')
 
         df = pd.DataFrame({'Home Team': homeT, 'Home Average': haverage, 'Away Team': awayT, 'Away Average': aaverage,
                            'Under 0.5': u05, 'Under 1.5': u15, 'Under 2.5': u25, 'BTTS': btts, 'BTTS No': bttsno})
@@ -271,49 +232,34 @@ class Football():
         df.to_excel(writer, sheet_name='Database')
         writer.save()
 
-        print(df, 'predictions.xlsx is ready', currentDT.strftime("%H:%M:%S"), sep='\n')
+        print(df, 'predictions.xlsx is ready', sep='\n')
 
     def framebuilder(self, dates = [], homet = [], homescore = [],
                      homeavg = [], awayt = [], aways = [], awayavg = [],
                      poisson05 = [], poisson15 = [], poisson25 = [],
                      btts = [], bttsno = []):
 
-        currentDT = datetime.now()
-
-        print('Building Dataframe', currentDT.strftime("%H:%M:%S"))
+        print('Building Dataframe')
 
         df = pd.DataFrame({
             'Date': dates, 'Home Team': homet, 'Away Team': awayt, 'Home Average': homeavg,  'Away Average': awayavg,
             'Under 0.5': poisson05, 'Under 1.5': poisson15, 'Under 2.5': poisson25, 'BTTS': btts, 'BTTS No': bttsno,
             'Home Score': homescore, 'Away Score': aways,})
-        writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'),
+
+        writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'),
                                 engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Database')
         writer.save()
 
-        currentDT = datetime.now()
-
-        print('dataset.xlsx is ready', currentDT.strftime("%H:%M:%S"))
-
-
-        df = df.dropna()
-        writer = pd.ExcelWriter(os.path.join(__location__, 'dropna.xlsx'),
-                                engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Database')
-        writer.save()
-
-        currentDT = datetime.now()
-
-        print('dropna.xlsx is ready', currentDT.strftime("%H:%M:%S"))
-
+        print('database.xlsx is ready')
 
 football = Football()
 
 football.match_date = matches['Date'].tolist()
 football.team_home = matches['Home Team'].tolist()
 football.team_away = matches['Away Team'].tolist()
-football.score_home = [x/100 for x in matches['Home Score'].tolist()]
-football.score_away = [x/100 for x in matches['Away Score'].tolist()]
+football.score_home = matches['Home Score'].tolist()
+football.score_away = matches['Away Score'].tolist()
 
 ##### INDEX(NaN) NaN:LEN(LIST) REPLACE NAN WITH SCORE ON DB
 
@@ -324,3 +270,5 @@ football.poissoncalc(football.average_home, football.average_away)
 football.framebuilder(football.match_date, football.team_home, football.score_home, football.average_home,
                       football.team_away, football.score_away, football.average_away,  football.poisson_05,
                       football.poisson_15, football.poisson_25, football.poisson_btts, football.poisson_bttsno)
+
+football.predictions(football.team_home, football.team_away, football.score_away, football.score_home)
