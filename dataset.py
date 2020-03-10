@@ -8,28 +8,33 @@ import numpy as np
 import os
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-matches = pd.read_excel(os.path.join(__location__, 'dataset.xlsx'), sheet_name='Database')
+matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
 
 class Football():
 
     def __init__(self, match_date=matches['Date'], team_home=matches['Home Team'], team_away=matches['Away Team'],
-                 score_home=matches['Home Score'], score_away=matches['Away Score'], average_home=[],
-                 average_away=[], poisson_05=[], poisson_15=[], poisson_25=[],
-                 poisson_btts=[], poisson_bttsno=[]):
+                 score_home=matches['Home Score'], score_away=matches['Away Score'], average_home=[], conceded_home=[],
+                 average_away=[], conceded_away=[], poisson_u05=[], poisson_u15=[], poisson_u25=[], poisson_o05=[],
+                 poisson_o15=[], poisson_o25=[], poisson_btts=[], poisson_bttsno=[]):
         self.match_date = match_date
         self.team_home = team_home
         self.team_away = team_away
         self.score_home = score_home
         self.score_away = score_away
         self.average_home = average_home
+        self.conceded_home = conceded_home
+        self.conceded_away = conceded_away
         self.average_away = average_away
-        self.poisson_05 = poisson_05
-        self.poisson_15 = poisson_15
-        self.poisson_25 = poisson_25
+        self.poisson_u05 = poisson_u05
+        self.poisson_u15 = poisson_u15
+        self.poisson_u25 = poisson_u25
         self.poisson_btts = poisson_btts
         self.poisson_bttsno = poisson_bttsno
+        self.poisson_o05 = poisson_o05
+        self.poisson_o15 = poisson_o15
+        self.poisson_o25 = poisson_o25
 
-    def scraper(self, match_date=[], team_home=[], team_away=[], score_home=[], score_away=[]):
+    def scraper(self):
         start_date = datetime.strptime(matches['Date'].tail(1).tolist()[0], '%Y-%m-%d')
         yesterday = str(date.today() - timedelta(days=1))
 
@@ -81,12 +86,10 @@ class Football():
                         series_date.append(str(day)[0:10])
                         series_home.append(h.text.replace(' *', ''))
                         series_away.append(a.text.replace(' *', ''))
-                        series_hscore.append(float(hs.text) / 100)
-                        series_ascore.append(float(aws.text) / 100)
+                        series_hscore.append(float(hs.text))
+                        series_ascore.append(float(aws.text))
 
                 driver.close()
-
-            currentDT = datetime.now()
 
             print('New database entries:', pd.DataFrame({'Date': series_date, 'Home': series_home, 'Away': series_away,
                                                          'HS': series_hscore, 'AS': series_ascore}), sep='\n')
@@ -113,37 +116,56 @@ class Football():
             print('Database is already up to date', currentDT.strftime("%H:%M:%S"))
 
     def under05(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)))
-        return float(np.array2string(result))
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)))
+        return round(float(np.array2string(result)), 5)
+
+    def over05(self, homeS, awayS):
+        result = 100 - 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS))))
+        return round(float(np.array2string(result)), 5)
 
     def under15(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
-        return float(np.array2string(result))
+                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
+        return round(float(np.array2string(result)), 5)
+
+    def over15(self, homeS, awayS):
+        result = 100 - 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
+        return round(float(np.array2string(result)), 5)
 
     def under25(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
+                        (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
+                        (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
+                        (poisson.pmf(0, homeS) * poisson.pmf(2, awayS))))
+        return round(float(np.array2string(result)), 5)
+
+    def over25(self, homeS, awayS):
+        result = 100 - 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
                         (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(2, awayS)))
-        return float(np.array2string(result))
+        return round(float(np.array2string(result)), 5)
 
     def btts(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 - 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
-        return float(np.array2string(result))
+        return round(float(np.array2string(result)), 5)
 
     def bttsno(self, homeS, awayS):
-        result = ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
+        result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
-        return float(np.array2string(result))
+        return round(float(np.array2string(result)), 5)
 
-    def averages(self, hteam=[], ateam=[], havg=[], aavg=[]):
+    def averages(self):
         # use Team list index to filter scores and calc mean
         home = []
         away = []
@@ -152,14 +174,25 @@ class Football():
 
         print('Calculating home averages', currentDT.strftime("%H:%M:%S"))
 
-        for h in hteam:
+        for h in football.team_home:
+            home.append(h)
+            temp_h = [np.NaN]
+            h_index = matches.loc[matches['Home Team'] == h].index.tolist()
+            for i in range(1, len(h_index) + 1):
+                df = matches['Home Score'].iloc[h_index[0:i]].mean()
+                temp_h.append(df)
+            football.average_home.append(round(temp_h[home.count(h) - 1] / 100, 5))
+
+        home = []
+
+        for h in football.team_home:
             home.append(h)
             temp_h = [np.NaN]
             h_index = matches.loc[matches['Home Team']==h].index.tolist()
             for i in range(1, len(h_index) + 1):
-                df = matches['Home Score'].iloc[h_index[0:i]].mean()
+                df = matches['Away Score'].iloc[h_index[0:i]].mean()
                 temp_h.append(df)
-            havg.append(round(temp_h[home.count(h) - 1] / 100, 2))
+            football.conceded_home.append(round(temp_h[home.count(h) - 1] / 100, 5))
 
         currentDT = datetime.now()
 
@@ -169,29 +202,43 @@ class Football():
 
         print('Calculating away averages', currentDT.strftime("%H:%M:%S"))
 
-        for a in ateam:
+        for a in football.team_away:
             away.append(a)
             temp_a = [np.NaN]
             a_index = matches.loc[matches['Away Team']==a].index.tolist()
             for i in range(1, len(a_index) + 1):
                 df = matches['Away Score'].iloc[a_index[0:i]].mean()
                 temp_a.append(df)
-            aavg.append(round(temp_a[away.count(a) - 1] / 100, 2))
+            football.average_away.append(round(temp_a[away.count(a) - 1] / 100, 5))
+
+        away = []
+
+        for a in football.team_away:
+            away.append(a)
+            temp_a = [np.NaN]
+            a_index = matches.loc[matches['Away Team'] == a].index.tolist()
+            for i in range(1, len(a_index) + 1):
+                df = matches['Home Score'].iloc[a_index[0:i]].mean()
+                temp_a.append(df)
+            football.average_away.append(round(temp_a[away.count(a) - 1] / 100, 5))
 
         currentDT = datetime.now()
 
         print('Finished calculating away averages', currentDT.strftime("%H:%M:%S"))
 
-    def poissoncalc(self, havg = [], aavg = []):
+    def poissoncalc(self):
 
         currentDT = datetime.now()
 
         print('Calculating Poisson distribution', currentDT.strftime("%H:%M:%S"))
 
-        for x, y in zip(havg, aavg):
-            football.poisson_05.append(football.under05(x, y))
-            football.poisson_15.append(football.under15(x, y))
-            football.poisson_25.append(football.under25(x, y))
+        for x, y in zip(football.average_home, football.average_away):
+            football.poisson_o05.append(football.over05(x, y))
+            football.poisson_u05.append(football.under05(x, y))
+            football.poisson_o15.append(football.over15(x, y))
+            football.poisson_u15.append(football.under15(x, y))
+            football.poisson_o25.append(football.over25(x, y))
+            football.poisson_u25.append(football.under25(x, y))
             football.poisson_btts.append(football.btts(x, y))
             football.poisson_bttsno.append(football.bttsno(x, y))
 
@@ -235,8 +282,11 @@ class Football():
         haverage = []
         aaverage = []
         u05 = []
+        o05 = []
         u15 = []
+        o15 = []
         u25 = []
+        o25 = []
         btts = []
         bttsno = []
 
@@ -254,8 +304,11 @@ class Football():
 
         for x, y in zip(haverage, aaverage):
             u05.append(football.under05(x, y))
+            o05.append(football.over05(x, y))
             u15.append(football.under15(x, y))
-            u25.append(football.under15(x, y))
+            o15.append(football.over15(x, y))
+            u25.append(football.under25(x, y))
+            o25.append(football.over25(x, y))
             btts.append(football.btts(x, y))
             bttsno.append(football.bttsno(x, y))
 
@@ -264,7 +317,8 @@ class Football():
         print('Writing output on predictions.xlsx', currentDT.strftime("%H:%M:%S"))
 
         df = pd.DataFrame({'Home Team': homeT, 'Home Average': haverage, 'Away Team': awayT, 'Away Average': aaverage,
-                           'Under 0.5': u05, 'Under 1.5': u15, 'Under 2.5': u25, 'BTTS': btts, 'BTTS No': bttsno})
+                           'Over 0.5': o05, 'Under 0.5': u05, 'Over 1.5': o15, 'Under 1.5': u15, 'Over 2.5': o25,
+                           'Under 2.5': u25, 'BTTS': btts, 'BTTS No': bttsno})
 
         writer = pd.ExcelWriter(os.path.join(__location__, 'predictions.xlsx'),
                                 engine='xlsxwriter')
@@ -273,19 +327,20 @@ class Football():
 
         print(df, 'predictions.xlsx is ready', currentDT.strftime("%H:%M:%S"), sep='\n')
 
-    def framebuilder(self, dates = [], homet = [], homescore = [],
-                     homeavg = [], awayt = [], aways = [], awayavg = [],
-                     poisson05 = [], poisson15 = [], poisson25 = [],
-                     btts = [], bttsno = []):
+    def framebuilder(self, filename):
 
         currentDT = datetime.now()
 
         print('Building Dataframe', currentDT.strftime("%H:%M:%S"))
 
         df = pd.DataFrame({
-            'Date': dates, 'Home Team': homet, 'Away Team': awayt, 'Home Average': homeavg,  'Away Average': awayavg,
-            'Under 0.5': poisson05, 'Under 1.5': poisson15, 'Under 2.5': poisson25, 'BTTS': btts, 'BTTS No': bttsno,
-            'Home Score': homescore, 'Away Score': aways,})
+            'Date': football.match_date, 'Home Team': football.team_home, 'Away Team': football.team_away,
+            'Home Average': football.average_home,  'Away Average': football.average_away,
+            'Over 0.5': football.poisson_o05, 'Under 0.5': football.poisson_u05, 'Over 1.5': football.poisson_o15,
+            'Under 1.5': football.poisson_u15, 'Over 2.5': football.poisson_o25, 'Under 2.5': football.poisson_u25,
+            'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno, 'Home Score': football.score_home,
+            'Away Score': football.score_away})
+
         writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'),
                                 engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Database')
@@ -293,7 +348,7 @@ class Football():
 
         currentDT = datetime.now()
 
-        print('dataset.xlsx is ready', currentDT.strftime("%H:%M:%S"))
+        print(' '.join(filename, '.xlsx is ready'),currentDT.strftime("%H:%M:%S"))
 
 
         df = df.dropna()
@@ -309,18 +364,15 @@ class Football():
 
 football = Football()
 
-football.match_date = matches['Date'].tolist()
-football.team_home = matches['Home Team'].tolist()
-football.team_away = matches['Away Team'].tolist()
-football.score_home = [x/100 for x in matches['Home Score'].tolist()]
-football.score_away = [x/100 for x in matches['Away Score'].tolist()]
+football.match_date = matches['Date']
+football.team_home = matches['Home Team']
+football.team_away = matches['Away Team']
+football.score_home = matches['Home Score']
+football.score_away = matches['Away Score']
 
 ##### INDEX(NaN) NaN:LEN(LIST) REPLACE NAN WITH SCORE ON DB
 
-football.scraper(football.match_date, football.team_home, football.team_away,
-                 football.score_home, football.score_away)
-football.averages(football.team_home, football.team_away, football.average_home, football.average_away)
-football.poissoncalc(football.average_home, football.average_away)
-football.framebuilder(football.match_date, football.team_home, football.score_home, football.average_home,
-                      football.team_away, football.score_away, football.average_away,  football.poisson_05,
-                      football.poisson_15, football.poisson_25, football.poisson_btts, football.poisson_bttsno)
+football.scraper()
+football.averages()
+football.poissoncalc()
+football.framebuilder('dataset')
