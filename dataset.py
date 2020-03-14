@@ -367,9 +367,30 @@ class Football():
 
         print('dataset.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
+    def teamcodes(self):
+        print('Encoding teams', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+        teams = sorted(set())
+        for home in football.team_home:
+            for away in football.team_away:
+                teams.add(home)
+                teams.add(away)
+        print(teams)
+        encoded_teams = {k: v for (k,v) in zip(teams, range(len(teams) + 1))}
+        return encoded_teams
+
     def filtering(self):
+        temp = matches.dropna()
+        print('Encoding teams', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+        teams = set()
+        for home, away in zip(football.team_home, football.team_away):
+            teams.add(home)
+            teams.add(away)
+        encoded_teams = {k: v for (k, v) in zip(teams, range(len(teams) + 1))}
+
         print('Preparing Support Vector Machine data', datetime.now().strftime("%H:%M:%S"), sep=' - ')
-        df = pd.read_excel(os.path.join(__location__, 'dataset.xlsx'), sheet_name='Dataset')
+
+        home_team = [encoded_teams[x] for x in temp['Home Team']]
+        away_team = [encoded_teams[x] for x in temp['Away Team']]
         winner = []
         o05 = []
         o15 = []
@@ -382,24 +403,28 @@ class Football():
         o85 = []
         o95 = []
         btts = []
-        date = pd.to_datetime(df['Date'])
+        date = pd.to_datetime(temp['Date'])
         date = pd.Series(date).dt.dayofyear
         date = pd.Series(sklearn.preprocessing.normalize([date.to_numpy()], norm='max',
                                                          axis=1).flatten(order='C'))
-        havg = pd.Series(sklearn.preprocessing.normalize([df['Home Average']], norm='max',
+        havg = pd.Series(sklearn.preprocessing.normalize([temp['Home Average']], norm='max',
                                                          axis=1).flatten(order='C'))
-        aavg = pd.Series(sklearn.preprocessing.normalize([df['Away Average']], norm='max',
+        aavg = pd.Series(sklearn.preprocessing.normalize([temp['Away Average']], norm='max',
                                                          axis=1).flatten(order='C'))
-        hcon = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Home']], norm='max',
+        hcon = pd.Series(sklearn.preprocessing.normalize([temp['AVG Conceded Home']], norm='max',
                                                          axis=1).flatten(order='C'))
-        acon = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Away']], norm='max',
+        acon = pd.Series(sklearn.preprocessing.normalize([temp['AVG Conceded Away']], norm='max',
                                                          axis=1).flatten(order='C'))
-        hscore = pd.Series(sklearn.preprocessing.normalize([df['Home Score']], norm='max',
+        hscore = pd.Series(sklearn.preprocessing.normalize([temp['Home Score']], norm='max',
                                                            axis=1).flatten(order='C'))
-        ascore = pd.Series(sklearn.preprocessing.normalize([df['Away Score']], norm='max',
+        ascore = pd.Series(sklearn.preprocessing.normalize([temp['Away Score']], norm='max',
+                                                           axis=1).flatten(order='C'))
+        home = pd.Series(sklearn.preprocessing.normalize([home_team], norm='max',
+                                                           axis=1).flatten(order='C'))
+        away = pd.Series(sklearn.preprocessing.normalize([away_team], norm='max',
                                                            axis=1).flatten(order='C'))
 
-        for x, y in zip(df['Home Score'], df['Away Score']):
+        for x, y in zip(temp['Home Score'], temp['Away Score']):
             if x + y == 0:
                 o05.append(-1)
                 o15.append(-1)
@@ -533,10 +558,10 @@ class Football():
         print('Writing data.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         df = pd.DataFrame({
-            'Date': date, 'Home Average': havg, 'Away Average': aavg, 'Home Conceded': hcon, 'Away Conceded': acon,
-            'Home Score': hscore, 'Away Score': ascore, 'Over 0.5': o05, 'Over 1.5': o15, 'Over 2.5': o25,
-            'Over 3.5': o35, 'Over 4.5': o45, 'Over 5.5': o55, 'Over 6.5': o65, 'Over 7.5': o75, 'Over 8.5': o85,
-            'Over 9.5': o95, 'Result': winner,
+            'Date': date, 'Home Average': havg, 'Away Average': aavg, 'Home Team': home, 'Away Team': away,
+            'Home Conceded': hcon, 'Away Conceded': acon, 'Home Score': hscore, 'Away Score': ascore, 'Over 0.5': o05,
+            'Over 1.5': o15, 'Over 2.5': o25, 'Over 3.5': o35, 'Over 4.5': o45, 'Over 5.5': o55, 'Over 6.5': o65,
+            'Over 7.5': o75, 'Over 8.5': o85, 'Over 9.5': o95, 'Result': winner,
         })
 
         writer = pd.ExcelWriter(os.path.join(__location__, 'data.xlsx'),
@@ -544,6 +569,7 @@ class Football():
         df.to_excel(writer, sheet_name='Dataset')
         writer.save()
 
+        print('data.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
 football = Football()
 
@@ -555,9 +581,9 @@ football.score_away = matches['Away Score']
 
 ##### INDEX(NaN) NaN:LEN(LIST) REPLACE NAN WITH SCORE ON DB
 
-football.scraper()
-football.averages()
-football.poissoncalc()
-football.database()
-football.dataset()
+# football.scraper()
+# football.averages()
+# football.poissoncalc()
+# football.database()
+# football.dataset()
 football.filtering()
