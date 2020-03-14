@@ -5,10 +5,11 @@ from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
 import numpy as np
-import os
+import os, sklearn.preprocessing
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
+
 
 class Football():
 
@@ -38,16 +39,13 @@ class Football():
         start_date = datetime.strptime(matches['Date'].tail(1).tolist()[0], '%Y-%m-%d')
         yesterday = str(date.today() - timedelta(days=1))
 
-        currentDT = datetime.now()
-
-        print('Checking current database', currentDT.strftime("%H:%M:%S"))
+        print('Checking current database', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         if start_date != datetime.strptime(yesterday, '%Y-%m-%d'):
             end_date = datetime.strptime(str(date.today()), '%Y-%m-%d')
 
-            currentDT = datetime.now()
 
-            print('Creating list of dates to scrape', currentDT.strftime("%H:%M:%S"))
+            print('Creating list of dates to scrape', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
             def daterange(start_date, end_date):
                 for n in range(int((end_date - start_date).days)):
@@ -59,9 +57,8 @@ class Football():
             series_hscore = []
             series_ascore = []
 
-            currentDT = datetime.now()
 
-            print('Starting the scraping process', currentDT.strftime("%H:%M:%S"))
+            print('Starting the scraping process', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
             for single_date in daterange(start_date, end_date):
                 day = str(datetime.strptime(str(single_date)[0:10], '%Y-%m-%d'))
@@ -86,17 +83,16 @@ class Football():
                         series_date.append(str(day)[0:10])
                         series_home.append(h.text.replace(' *', ''))
                         series_away.append(a.text.replace(' *', ''))
-                        series_hscore.append(float(hs.text))
-                        series_ascore.append(float(aws.text))
+                        series_hscore.append(hs.text)
+                        series_ascore.append(aws.text)
 
                 driver.close()
 
             print('New database entries:', pd.DataFrame({'Date': series_date, 'Home': series_home, 'Away': series_away,
                                                          'HS': series_hscore, 'AS': series_ascore}), sep='\n')
 
-            currentDT = datetime.now()
 
-            print('Writing new data into the database file', currentDT.strftime("%H:%M:%S"))
+            print('Writing new data into the database file', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
             new_matches = pd.DataFrame({'Date': series_date, 'Home Team': series_home, 'Home Score': series_hscore,
                                         'Away Team': series_away, 'Away Score': series_ascore})
@@ -106,14 +102,12 @@ class Football():
             stats.to_excel(writer, sheet_name='Database')
             writer.save()
 
-            currentDT = datetime.now()
 
-            print('dataset.xlsx is ready', currentDT.strftime("%H:%M:%S"))
+            print('dataset.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         else:
-            currentDT = datetime.now()
 
-            print('Database is already up to date', currentDT.strftime("%H:%M:%S"))
+            print('Database is already up to date', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
     def under05(self, homeS, awayS):
         result = 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)))
@@ -125,38 +119,38 @@ class Football():
 
     def under15(self, homeS, awayS):
         result = 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
+                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
         return round(float(np.array2string(result)), 5)
 
     def over15(self, homeS, awayS):
         result = 100 - 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
+                               (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                               (poisson.pmf(0, homeS) * poisson.pmf(1, awayS))))
         return round(float(np.array2string(result)), 5)
 
     def under25(self, homeS, awayS):
         result = 100 * (((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
-                        (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(2, awayS))))
+                         (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                         (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
+                         (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
+                         (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
+                         (poisson.pmf(0, homeS) * poisson.pmf(2, awayS))))
         return round(float(np.array2string(result)), 5)
 
     def over25(self, homeS, awayS):
         result = 100 - 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
-                        (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(2, awayS)))
+                              (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                              (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)) +
+                              (poisson.pmf(1, homeS) * poisson.pmf(1, awayS)) +
+                              (poisson.pmf(2, homeS) * poisson.pmf(0, awayS)) +
+                              (poisson.pmf(0, homeS) * poisson.pmf(2, awayS)))
         return round(float(np.array2string(result)), 5)
 
     def btts(self, homeS, awayS):
         result = 100 - 100 * ((poisson.pmf(0, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
-                        (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
+                              (poisson.pmf(1, homeS) * poisson.pmf(0, awayS)) +
+                              (poisson.pmf(0, homeS) * poisson.pmf(1, awayS)))
         return round(float(np.array2string(result)), 5)
 
     def bttsno(self, homeS, awayS):
@@ -170,9 +164,7 @@ class Football():
         home = []
         away = []
 
-        currentDT = datetime.now()
-
-        print('Calculating home averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating home averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for h in football.team_home:
             home.append(h)
@@ -181,35 +173,31 @@ class Football():
             for i in range(1, len(h_index) + 1):
                 df = matches['Home Score'].iloc[h_index[0:i]].mean()
                 temp_h.append(df)
-            football.average_home.append(round(temp_h[home.count(h) - 1] / 100, 5))
+            football.average_home.append(round(temp_h[home.count(h) - 1], 5))
 
         home = []
 
         for h in football.team_home:
             home.append(h)
             temp_h = [np.NaN]
-            h_index = matches.loc[matches['Home Team']==h].index.tolist()
+            h_index = matches.loc[matches['Home Team'] == h].index.tolist()
             for i in range(1, len(h_index) + 1):
                 df = matches['Away Score'].iloc[h_index[0:i]].mean()
                 temp_h.append(df)
-            football.conceded_home.append(round(temp_h[home.count(h) - 1] / 100, 5))
+            football.conceded_home.append(round(temp_h[home.count(h) - 1], 5))
 
-        currentDT = datetime.now()
+        print('Finished calculating home averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-        print('Finished calculating home averages', currentDT.strftime("%H:%M:%S"))
-
-        currentDT = datetime.now()
-
-        print('Calculating away averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating away averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for a in football.team_away:
             away.append(a)
             temp_a = [np.NaN]
-            a_index = matches.loc[matches['Away Team']==a].index.tolist()
+            a_index = matches.loc[matches['Away Team'] == a].index.tolist()
             for i in range(1, len(a_index) + 1):
                 df = matches['Away Score'].iloc[a_index[0:i]].mean()
                 temp_a.append(df)
-            football.average_away.append(round(temp_a[away.count(a) - 1] / 100, 5))
+            football.average_away.append(round(temp_a[away.count(a) - 1], 5))
 
         away = []
 
@@ -220,17 +208,13 @@ class Football():
             for i in range(1, len(a_index) + 1):
                 df = matches['Home Score'].iloc[a_index[0:i]].mean()
                 temp_a.append(df)
-            football.average_away.append(round(temp_a[away.count(a) - 1] / 100, 5))
+            football.conceded_away.append(round(temp_a[away.count(a) - 1], 5))
 
-        currentDT = datetime.now()
-
-        print('Finished calculating away averages', currentDT.strftime("%H:%M:%S"))
+        print('Finished calculating away averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
     def poissoncalc(self):
 
-        currentDT = datetime.now()
-
-        print('Calculating Poisson distribution', currentDT.strftime("%H:%M:%S"))
+        print('Calculating Poisson distribution', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for x, y in zip(football.average_home, football.average_away):
             football.poisson_o05.append(football.over05(x, y))
@@ -242,18 +226,14 @@ class Football():
             football.poisson_btts.append(football.btts(x, y))
             football.poisson_bttsno.append(football.bttsno(x, y))
 
-        currentDT = datetime.now()
+        print('Done calculating Poisson distribution', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-        print('Done calculating Poisson distribution', currentDT.strftime("%H:%M:%S"))
-
-    def predictions(self, hteam=[], ateam=[], hscore = [], ascore = []):
+    def predictions(self, hteam=[], ateam=[], hscore=[], ascore=[]):
 
         tomorrow = str(date.today() + timedelta(days=1))
         url = 'https://www.livescore.com/soccer/' + tomorrow
 
-        currentDT = datetime.now()
-
-        print('Initializing Chrome', currentDT.strftime("%H:%M:%S"))
+        print('Initializing Chrome', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         options = Options()
         options.headless = True
@@ -261,18 +241,14 @@ class Football():
         driver.get(url)
         driver.set_page_load_timeout(10)
 
-        currentDT = datetime.now()
-
-        print("Extracting Tomorrow's matches", currentDT.strftime("%H:%M:%S"))
+        print("Extracting Tomorrow's matches", datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         homeT = pd.Series([x.text for x in soup.find_all('div', class_='ply tright name') if x.text != '__home_team__'])
         awayT = pd.Series([x.text for x in soup.find_all('div', class_='ply name') if x.text != '__away_team__'])
         driver.close()
 
-        currentDT = datetime.now()
-
-        print('Matches extracted', currentDT.strftime("%H:%M:%S"))
+        print('Matches extracted', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         empty = pd.Series([np.NaN for x in homeT])
         hteam.append(homeT)
@@ -290,17 +266,13 @@ class Football():
         btts = []
         bttsno = []
 
-        currentDT = datetime.now()
-
-        print('Calculating averages', currentDT.strftime("%H:%M:%S"))
+        print('Calculating averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for h, a in zip(homeT, awayT):
             haverage.append(matches[matches['Home Team'] == h]['Home Score'].mean())
             aaverage.append(matches[matches['Away Team'] == a]['Away Score'].mean())
 
-        currentDT = datetime.now()
-
-        print('Calculating Poisson distributions', currentDT.strftime("%H:%M:%S"))
+        print('Calculating Poisson distributions', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for x, y in zip(haverage, aaverage):
             u05.append(football.under05(x, y))
@@ -312,9 +284,7 @@ class Football():
             btts.append(football.btts(x, y))
             bttsno.append(football.bttsno(x, y))
 
-        currentDT = datetime.now()
-
-        print('Writing output on predictions.xlsx', currentDT.strftime("%H:%M:%S"))
+        print('Writing output on predictions.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         df = pd.DataFrame({'Home Team': homeT, 'Home Average': haverage, 'Away Team': awayT, 'Away Average': aaverage,
                            'Over 0.5': o05, 'Under 0.5': u05, 'Over 1.5': o15, 'Under 1.5': u15, 'Over 2.5': o25,
@@ -325,41 +295,254 @@ class Football():
         df.to_excel(writer, sheet_name='Database')
         writer.save()
 
-        print(df, 'predictions.xlsx is ready', currentDT.strftime("%H:%M:%S"), sep='\n')
+        print(df, 'predictions.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep='\n')
 
-    def framebuilder(self, filename):
+    def database(self):
 
-        currentDT = datetime.now()
-
-        print('Building Dataframe', currentDT.strftime("%H:%M:%S"))
+        print('Building Database', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         df = pd.DataFrame({
             'Date': football.match_date, 'Home Team': football.team_home, 'Away Team': football.team_away,
-            'Home Average': football.average_home,  'Away Average': football.average_away,
+            'Home Average': football.average_home, 'Away Average': football.average_away,
+            'AVG Conceded Home': football.conceded_home, 'AVG Conceded Away': football.conceded_away,
             'Over 0.5': football.poisson_o05, 'Under 0.5': football.poisson_u05, 'Over 1.5': football.poisson_o15,
             'Under 1.5': football.poisson_u15, 'Over 2.5': football.poisson_o25, 'Under 2.5': football.poisson_u25,
-            'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno, 'Home Score': football.score_home,
-            'Away Score': football.score_away})
+            'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno,
+            'Home Score': football.score_home, 'Away Score': football.score_away})
+
+        writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'),
+                                engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Database')
+        writer.save()
+
+        print(' '.join(['database.xlsx is ready']), datetime.now().strftime("%H:%M:%S"), sep=' - ')
+
+    def dataset(self):
+
+        df = matches.dropna()
+
+        date = pd.to_datetime(df['Date'])
+        date = pd.Series(date).dt.dayofyear
+        date = pd.Series(sklearn.preprocessing.normalize([date.to_numpy()], norm='max',
+                                                         axis=1).flatten(order='C'))
+        home_avg = pd.Series(sklearn.preprocessing.normalize([df['Home Average']], norm='max',
+                                                             axis=1).flatten(order='C'))
+        away_avg = pd.Series(sklearn.preprocessing.normalize([df['Away Average']], norm='max',
+                                                             axis=1).flatten(order='C'))
+        home_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Home']], norm='max',
+                                                                   axis=1).flatten(order='C'))
+        away_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Away']], norm='max',
+                                                                   axis=1).flatten(order='C'))
+        o05 = pd.Series(sklearn.preprocessing.normalize([df['Over 0.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        u05 = pd.Series(sklearn.preprocessing.normalize([df['Under 0.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        o15 = pd.Series(sklearn.preprocessing.normalize([df['Over 1.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        u15 = pd.Series(sklearn.preprocessing.normalize([df['Under 1.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        o25 = pd.Series(sklearn.preprocessing.normalize([df['Over 2.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        u25 = pd.Series(sklearn.preprocessing.normalize([df['Under 2.5']], norm='max',
+                                                        axis=1).flatten(order='C'))
+        btts = pd.Series(sklearn.preprocessing.normalize([df['BTTS']], norm='max',
+                                                         axis=1).flatten(order='C'))
+        bttsno = pd.Series(sklearn.preprocessing.normalize([df['BTTS No']], norm='max',
+                                                           axis=1).flatten(order='C'))
+        home_score = pd.Series(sklearn.preprocessing.normalize([df['Home Score']], norm='max',
+                                                               axis=1).flatten(order='C'))
+        away_score = pd.Series(sklearn.preprocessing.normalize([df['Away Score']], norm='max',
+                                                               axis=1).flatten(order='C'))
+
+        df = pd.DataFrame({
+            'Date': date, 'Home Average': home_avg, 'Away Average': away_avg,
+            'AVG Conceded Home': home_conceded, 'AVG Conceded Away': away_conceded, 'Over 0.5': o05,
+            'Under 0.5': u05, 'Over 1.5': o15, 'Under 1.5': u15, 'Over 2.5': o25, 'Under 2.5': u25,
+            'BTTS': btts, 'BTTS No': bttsno, 'Home Score': home_score, 'Away Score': away_score})
 
         writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'),
                                 engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Database')
+        df.to_excel(writer, sheet_name='Dataset')
         writer.save()
 
-        currentDT = datetime.now()
+        print('dataset.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-        print(' '.join(filename, '.xlsx is ready'),currentDT.strftime("%H:%M:%S"))
+    def filtering(self):
+        print('Preparing Support Vector Machine data', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+        df = pd.read_excel(os.path.join(__location__, 'dataset.xlsx'), sheet_name='Dataset')
+        winner = []
+        o05 = []
+        o15 = []
+        o25 = []
+        o35 = []
+        o45 = []
+        o55 = []
+        o65 = []
+        o75 = []
+        o85 = []
+        o95 = []
+        btts = []
+        date = pd.to_datetime(df['Date'])
+        date = pd.Series(date).dt.dayofyear
+        date = pd.Series(sklearn.preprocessing.normalize([date.to_numpy()], norm='max',
+                                                         axis=1).flatten(order='C'))
+        havg = pd.Series(sklearn.preprocessing.normalize([df['Home Average']], norm='max',
+                                                         axis=1).flatten(order='C'))
+        aavg = pd.Series(sklearn.preprocessing.normalize([df['Away Average']], norm='max',
+                                                         axis=1).flatten(order='C'))
+        hcon = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Home']], norm='max',
+                                                         axis=1).flatten(order='C'))
+        acon = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Away']], norm='max',
+                                                         axis=1).flatten(order='C'))
+        hscore = pd.Series(sklearn.preprocessing.normalize([df['Home Score']], norm='max',
+                                                           axis=1).flatten(order='C'))
+        ascore = pd.Series(sklearn.preprocessing.normalize([df['Away Score']], norm='max',
+                                                           axis=1).flatten(order='C'))
 
+        for x, y in zip(df['Home Score'], df['Away Score']):
+            if x + y == 0:
+                o05.append(-1)
+                o15.append(-1)
+                o25.append(-1)
+                o35.append(-1)
+                o45.append(-1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 1:
+                o05.append(1)
+                o15.append(-1)
+                o25.append(-1)
+                o35.append(-1)
+                o45.append(-1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 2:
+                o05.append(1)
+                o15.append(1)
+                o25.append(-1)
+                o35.append(-1)
+                o45.append(-1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 3:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(-1)
+                o45.append(-1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 4:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(-1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 5:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(-1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 6:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(1)
+                o65.append(-1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 7:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(1)
+                o65.append(1)
+                o75.append(-1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 8:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(1)
+                o65.append(1)
+                o75.append(1)
+                o85.append(-1)
+                o95.append(-1)
+            elif x + y == 9:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(1)
+                o65.append(1)
+                o75.append(1)
+                o85.append(1)
+                o95.append(-1)
+            else:
+                o05.append(1)
+                o15.append(1)
+                o25.append(1)
+                o35.append(1)
+                o45.append(1)
+                o55.append(1)
+                o65.append(1)
+                o75.append(1)
+                o85.append(1)
+                o95.append(1)
+            if x > y:
+                winner.append(1)
+            else:
+                winner.append(-1)
+            if x != 0 and y != 0:
+                btts.append(1)
+            else:
+                btts.append(-1)
 
-        df = df.dropna()
-        writer = pd.ExcelWriter(os.path.join(__location__, 'dropna.xlsx'),
+        print('Writing data.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+
+        df = pd.DataFrame({
+            'Date': date, 'Home Average': havg, 'Away Average': aavg, 'Home Conceded': hcon, 'Away Conceded': acon,
+            'Home Score': hscore, 'Away Score': ascore, 'Over 0.5': o05, 'Over 1.5': o15, 'Over 2.5': o25,
+            'Over 3.5': o35, 'Over 4.5': o45, 'Over 5.5': o55, 'Over 6.5': o65, 'Over 7.5': o75, 'Over 8.5': o85,
+            'Over 9.5': o95, 'Result': winner,
+        })
+
+        writer = pd.ExcelWriter(os.path.join(__location__, 'data.xlsx'),
                                 engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Database')
+        df.to_excel(writer, sheet_name='Dataset')
         writer.save()
-
-        currentDT = datetime.now()
-
-        print('dropna.xlsx is ready', currentDT.strftime("%H:%M:%S"))
 
 
 football = Football()
@@ -375,4 +558,6 @@ football.score_away = matches['Away Score']
 football.scraper()
 football.averages()
 football.poissoncalc()
-football.framebuilder('dataset')
+football.database()
+football.dataset()
+football.filtering()
