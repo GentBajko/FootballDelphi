@@ -5,7 +5,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 import os
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
-dataset = pd.read_excel(os.path.join(__location__, 'data.xlsx'), sheet_name='Dataset')
+dataset = pd.read_excel(os.path.join(__location__, 'dataset.xlsx'), sheet_name='Dataset')
 
 dataset = dataset.tail(2000)
 
