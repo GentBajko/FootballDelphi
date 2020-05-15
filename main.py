@@ -1,11 +1,16 @@
-from selenium.webdriver.chrome.options import Options
+import os
+import sklearn.preprocessing
+import time
 from datetime import date, timedelta, datetime
+
+import numpy as np
+import pandas as pd
+from bs4 import BeautifulSoup
 from scipy.stats import poisson
 from selenium import webdriver
-from bs4 import BeautifulSoup
-import pandas as pd
-import numpy as np
-import os, sklearn.preprocessing
+from selenium.webdriver.chrome.options import Options
+
+start = time.perf_counter()
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
@@ -48,7 +53,6 @@ class Football():
         if start_date != datetime.strptime(yesterday, '%Y-%m-%d'):
             end_date = datetime.strptime(str(date.today()), '%Y-%m-%d')
 
-
             print('Creating list of dates to scrape', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
             def daterange(start_date, end_date):
@@ -60,7 +64,6 @@ class Football():
             series_away = []
             series_hscore = []
             series_ascore = []
-
 
             print('Starting the scraping process', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
@@ -95,17 +98,15 @@ class Football():
             print('New database entries:', pd.DataFrame({'Date': series_date, 'Home': series_home, 'Away': series_away,
                                                          'HS': series_hscore, 'AS': series_ascore}), sep='\n')
 
-
             print('Writing new data into the database file', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
             new_matches = pd.DataFrame({'Date': series_date, 'Home Team': series_home, 'Home Score': series_hscore,
                                         'Away Team': series_away, 'Away Score': series_ascore})
             frames = [matches, new_matches]
             stats = pd.concat(frames, join='inner', ignore_index=True, sort=False)
-            writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'), engine='xlsxwriter')
+            writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'), engine='xlsxwriter')
             stats.to_excel(writer, sheet_name='Database')
             writer.save()
-
 
             print('dataset.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
@@ -200,55 +201,32 @@ class Football():
         return round(float(np.array2string(result)), 5)
 
     def averages(self):
-        # use Team list index to filter scores and calc mean
-        home = []
-        away = []
 
         print('Calculating home averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-        for h in football.team_home:
-            home.append(h)
-            temp_h = [np.NaN]
-            h_index = matches.loc[matches['Home Team'] == h].index.tolist()
-            for i in range(1, len(h_index) + 1):
-                df = matches['Home Score'].iloc[h_index[0:i]].mean()
-                temp_h.append(df)
-            football.average_home.append(round(temp_h[home.count(h) - 1], 5))
+        home_avg = []
+        home_conceded = []
 
-        home = []
+        for team in matches['Home Team'].unique():
+            home_avg.append(matches[matches['Home Team'] == team]['Home Score'].expanding(2).mean())
+            home_conceded.append(matches[matches['Home Team'] == team]['Away Score'].expanding(2).mean())
 
-        for h in football.team_home:
-            home.append(h)
-            temp_h = [np.NaN]
-            h_index = matches.loc[matches['Home Team'] == h].index.tolist()
-            for i in range(1, len(h_index) + 1):
-                df = matches['Away Score'].iloc[h_index[0:i]].mean()
-                temp_h.append(df)
-            football.conceded_home.append(round(temp_h[home.count(h) - 1], 5))
+        football.average_home = pd.concat(home_avg).sort_index()
+        football.conceded_home = pd.concat(home_conceded).sort_index()
 
         print('Finished calculating home averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         print('Calculating away averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-        for a in football.team_away:
-            away.append(a)
-            temp_a = [np.NaN]
-            a_index = matches.loc[matches['Away Team'] == a].index.tolist()
-            for i in range(1, len(a_index) + 1):
-                df = matches['Away Score'].iloc[a_index[0:i]].mean()
-                temp_a.append(df)
-            football.average_away.append(round(temp_a[away.count(a) - 1], 5))
+        away_avg = []
+        away_conceded = []
 
-        away = []
+        for team in matches['Away Team'].unique():
+            away_avg.append(matches[matches['Away Team'] == team]['Away Score'].expanding(2).mean())
+            away_conceded.append(matches[matches['Away Team'] == team]['Home Score'].expanding(2).mean())
 
-        for a in football.team_away:
-            away.append(a)
-            temp_a = [np.NaN]
-            a_index = matches.loc[matches['Away Team'] == a].index.tolist()
-            for i in range(1, len(a_index) + 1):
-                df = matches['Home Score'].iloc[a_index[0:i]].mean()
-                temp_a.append(df)
-            football.conceded_away.append(round(temp_a[away.count(a) - 1], 5))
+        football.average_away = pd.concat(away_avg).sort_index()
+        football.conceded_away = pd.concat(away_conceded).sort_index()
 
         print('Finished calculating away averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
@@ -334,7 +312,7 @@ class Football():
         print('Writing output on predictions.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         df = pd.DataFrame({
-            'Home Team': homeT,  'Away Team': awayT, 'Home Average': haverage, 'Away Average': aaverage,
+            'Home Team': homeT, 'Away Team': awayT, 'Home Average': haverage, 'Away Average': aaverage,
             'Home Conceded': hconceded, 'Away Conceded': aconceded, 'Over 0.5': o05, 'Under 0.5': u05, 'Over 1.5': o15,
             'Under 1.5': u15, 'Over 2.5': o25, 'Under 2.5': u25, 'BTTS': btts, 'BTTS No': bttsno
         })
@@ -397,9 +375,9 @@ class Football():
         away_avg = pd.Series(sklearn.preprocessing.normalize([df['Away Average']], norm='max',
                                                              axis=1).flatten(order='C'))
         home_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Home']], norm='max',
-                                                                   axis=1).flatten(order='C'))
+                                                                  axis=1).flatten(order='C'))
         away_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Away']], norm='max',
-                                                                   axis=1).flatten(order='C'))
+                                                                  axis=1).flatten(order='C'))
         o05 = pd.Series(sklearn.preprocessing.normalize([df['Over 0.5']], norm='max',
                                                         axis=1).flatten(order='C'))
         u05 = pd.Series(sklearn.preprocessing.normalize([df['Under 0.5']], norm='max',
@@ -425,7 +403,7 @@ class Football():
         away = pd.Series(sklearn.preprocessing.normalize([away_team], norm='max',
                                                          axis=1).flatten(order='C'))
         df = pd.DataFrame({
-            'Date': date, 'Home Team': home, 'Away Team': away,'Home Average': home_avg,
+            'Date': date, 'Home Team': home, 'Away Team': away, 'Home Average': home_avg,
             'Away Average': away_avg, 'AVG Conceded Home': home_conceded, 'AVG Conceded Away': away_conceded,
             'Over 0.5': o05, 'Under 0.5': u05, 'Over 1.5': o15, 'Under 1.5': u15, 'Over 2.5': o25, 'Under 2.5': u25,
             'BTTS': btts, 'BTTS No': bttsno, 'Home Score': home_score, 'Away Score': away_score, 'Result': winner
@@ -471,6 +449,7 @@ class Football():
 
         print('data.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
+
 football = Football()
 
 football.match_date = matches['Date']
@@ -487,3 +466,7 @@ football.poisson()
 football.database()
 football.dataset()
 football.predictions()
+
+finish = time.perf_counter()
+
+print(f"Finished in {round(finish - start, 2)} second(s)")
