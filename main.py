@@ -16,7 +16,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
 
 
-class Football():
+class Football:
 
     def __init__(self, match_date=matches['Date'], team_home=matches['Home Team'], team_away=matches['Away Team'],
                  score_home=matches['Home Score'], score_away=matches['Away Score'], average_home=[], conceded_home=[],
@@ -249,7 +249,7 @@ class Football():
 
         print('Done calculating Poisson distribution', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-    def predictions(self, hteam=[], ateam=[], hscore=[], ascore=[]):
+    def upcoming(self, hteam=[], ateam=[], hscore=[], ascore=[]):
 
         tomorrow = str(date.today() + timedelta(days=1))
         url = 'https://www.livescore.com/soccer/' + tomorrow
@@ -309,7 +309,7 @@ class Football():
             btts.append(football.btts(x, y))
             bttsno.append(football.bttsno(x, y))
 
-        print('Writing output on predictions.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+        print('Writing output on upcoming.xlsx', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         df = pd.DataFrame({
             'Home Team': homeT, 'Away Team': awayT, 'Home Average': haverage, 'Away Average': aaverage,
@@ -317,12 +317,12 @@ class Football():
             'Under 1.5': u15, 'Over 2.5': o25, 'Under 2.5': u25, 'BTTS': btts, 'BTTS No': bttsno
         })
 
-        writer = pd.ExcelWriter(os.path.join(__location__, 'predictions.xlsx'),
+        writer = pd.ExcelWriter(os.path.join(__location__, 'upcoming.xlsx'),
                                 engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Database')
         writer.save()
 
-        print(df, 'predictions.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep='\n')
+        print(df, 'upcoming.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep='\n')
 
     def database(self):
 
@@ -458,14 +458,12 @@ football.team_away = matches['Away Team']
 football.score_home = matches['Home Score']
 football.score_away = matches['Away Score']
 
-##### INDEX(NaN) NaN:LEN(LIST) REPLACE NAN WITH SCORE ON DB
-
 football.scraper()
 football.averages()
 football.poisson()
 football.database()
 football.dataset()
-football.predictions()
+football.upcoming()
 
 finish = time.perf_counter()
 
