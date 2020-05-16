@@ -1,74 +1,0 @@
-
-‚python:S5717ü"]Change this default value to "None" and initialize this parameter inside the function/method.(ÀûÉæşÿÿÿÿ8“øÌ¡.
-upython:S117‰"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ê¨Çœıÿÿÿÿ8“øÌ¡.
-Epython:S1110v"!Remove those useless parentheses.(±ã§Ûÿÿÿÿÿ8“øÌ¡.
-mpython:S1192"NDefine a constant instead of duplicating this literal 'database.xlsx' 3 times.(ØŸÂ×8“øÌ¡.
-opython:S1192½"JDefine a constant instead of duplicating this literal 'Under 1.5' 6 times.(Æã—Üüÿÿÿÿ8“øÌ¡.
-ppython:S117ƒ"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(ìÑµ8“øÌ¡.
-Fpython:S1110„"!Remove those useless parentheses.(†æéãüÿÿÿÿ8“øÌ¡.
-upython:S117¹"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(¾ö¶şıÿÿÿÿ8“øÌ¡.
-mpython:S11920"IDefine a constant instead of duplicating this literal '%Y-%m-%d' 5 times.(Åù®Âıÿÿÿÿ8“øÌ¡.
-tpython:S117}"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(Üäéùÿÿÿÿ8“øÌ¡.
-upython:S117¡"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(”îäüÿÿÿÿ8“øÌ¡.
-‚python:S5717ü"]Change this default value to "None" and initialize this parameter inside the function/method.(ÀûÉæşÿÿÿÿ8“øÌ¡.
-jpython:S1192"KDefine a constant instead of duplicating this literal 'Home Team' 14 times.(–êÔø8“øÌ¡.
-ipython:S1192¼"JDefine a constant instead of duplicating this literal 'Under 0.5' 6 times.(ĞŠ÷8“øÌ¡.
-kpython:S1192"LDefine a constant instead of duplicating this literal 'Home Score' 13 times.(ª¦¡ß8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ˆ—œ8“øÌ¡.
-spython:S3776/"TRefactor this function to reduce its Cognitive Complexity from 16 to the 15 allowed.(±”·8“øÌ¡.
-ppython:S117ƒ"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(ìÑµ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-jpython:S107"LMethod "__init__" has 21 parameters, which is greater than the 7 authorized.(–êÔø8“øÌ¡.
-Fpython:S1110Š"!Remove those useless parentheses.(™¾“êûÿÿÿÿ8“øÌ¡.
-ppython:S117’"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(”¥Ò·8“øÌ¡.
-‚python:S5717ü"]Change this default value to "None" and initialize this parameter inside the function/method.(ÀûÉæşÿÿÿÿ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-opython:S117u"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(™”¢Ç8“øÌ¡.
-Epython:S1110~"!Remove those useless parentheses.(™¾“êûÿÿÿÿ8“øÌ¡.
-hpython:S1192¼"IDefine a constant instead of duplicating this literal 'Over 0.5' 6 times.(ĞŠ÷8“øÌ¡.
-upython:S117¡"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(”îäüÿÿÿÿ8“øÌ¡.
-zpython:S117"VRename this local variable "awayT" to match the regular expression ^[_a-z][a-z0-9_]*$.(£íŠÂùÿÿÿÿ8“øÌ¡.
-upython:S117Œ"VRename this local variable "homeT" to match the regular expression ^[_a-z][a-z0-9_]*$.(Şşªœ8“øÌ¡.
-python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ÇØæªüÿÿÿÿ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ˆ—œ8“øÌ¡.
-@python:S1110z"!Remove those useless parentheses.(ÇèãĞ8“øÌ¡.
-ppython:S117’"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(”¥Ò·8“øÌ¡.
-zpython:S117S"WRename this local variable "hScore" to match the regular expression ^[_a-z][a-z0-9_]*$.(éØ¸Ìúÿÿÿÿ8“øÌ¡.
-upython:S117§"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(ŞÕô‰øÿÿÿÿ8“øÌ¡.
-Jpython:S1481’"%Remove the unused local variable "x".(“Õáãÿÿÿÿÿ8“øÌ¡.
-kpython:S1192"LDefine a constant instead of duplicating this literal 'Away Score' 13 times.(ª¦¡ß8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ˆ—œ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ª¦¡ß8“øÌ¡.
-‚python:S5717ü"]Change this default value to "None" and initialize this parameter inside the function/method.(ÀûÉæşÿÿÿÿ8“øÌ¡.
-Cpython:S125ö"Remove this commented out code.(æÂÚÁıÿÿÿÿ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ˆ—œ8“øÌ¡.
-ppython:S117›"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(‡Œó£8“øÌ¡.
-Gpython:S108X")Either remove or fill this block of code.(ã‘Û¾8“øÌ¡.
-python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ÇØæªüÿÿÿÿ8“øÌ¡.
-mpython:S1192½"HDefine a constant instead of duplicating this literal 'BTTS No' 6 times.(Æã—Üüÿÿÿÿ8“øÌ¡.
-upython:S117§"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(ŞÕô‰øÿÿÿÿ8“øÌ¡.
-@python:S1110z"!Remove those useless parentheses.(ÇèãĞ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-jpython:S1192"KDefine a constant instead of duplicating this literal 'Away Team' 14 times.(–êÔø8“øÌ¡.
-npython:S1192½"IDefine a constant instead of duplicating this literal 'Over 2.5' 6 times.(Æã—Üüÿÿÿÿ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ª¦¡ß8“øÌ¡.
-ypython:S117Q"VRename this local variable "homeT" to match the regular expression ^[_a-z][a-z0-9_]*$.(ƒÕ¢¬şÿÿÿÿ8“øÌ¡.
-upython:S117¹"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(¾ö¶şıÿÿÿÿ8“øÌ¡.
-opython:S1192½"JDefine a constant instead of duplicating this literal 'Under 2.5' 6 times.(Æã—Üüÿÿÿÿ8“øÌ¡.
-tpython:S117}"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(Üäéùÿÿÿÿ8“øÌ¡.
-rpython:S1192»"MDefine a constant instead of duplicating this literal 'Away Average' 6 times.(«¿Ú ıÿÿÿÿ8“øÌ¡.
-rpython:S1192»"MDefine a constant instead of duplicating this literal 'Home Average' 6 times.(«¿Ú ıÿÿÿÿ8“øÌ¡.
-upython:S117T"WRename this local variable "aScore" to match the regular expression ^[_a-z][a-z0-9_]*$.(åÎ°8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-hpython:S1192¼"IDefine a constant instead of duplicating this literal 'Over 1.5' 6 times.(ĞŠ÷8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-wpython:S1192Î"RDefine a constant instead of duplicating this literal 'AVG Conceded Home' 5 times.(ôÖæ—øÿÿÿÿ8“øÌ¡.
-ypython:S117R"VRename this local variable "awayT" to match the regular expression ^[_a-z][a-z0-9_]*$.(ÎÁıÁøÿÿÿÿ8“øÌ¡.
-opython:S117u"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(™”¢Ç8“øÌ¡.
-tpython:S117y"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(¾àªîüÿÿÿÿ8“øÌ¡.
-upython:S117‰"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(Ê¨Çœıÿÿÿÿ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(ˆ—œ8“øÌ¡.
-|python:S5717"]Change this default value to "None" and initialize this parameter inside the function/method.(Ñ¥Î8“øÌ¡.
-tpython:S117y"QRename this parameter "homeS" to match the regular expression ^[_a-z][a-z0-9_]*$.(¾àªîüÿÿÿÿ8“øÌ¡.
-wpython:S1192Î"RDefine a constant instead of duplicating this literal 'AVG Conceded Away' 5 times.(ôÖæ—øÿÿÿÿ8“øÌ¡.
-ppython:S117›"QRename this parameter "awayS" to match the regular expression ^[_a-z][a-z0-9_]*$.(‡Œó£8“øÌ¡.
