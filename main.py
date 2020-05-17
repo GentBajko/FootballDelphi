@@ -72,12 +72,15 @@ class Football:
 
             print('Starting the scraping process', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-            elements_scraped = 0
+            series_date = []
+            series_home = []
+            series_away = []
+            series_hscore = []
+            series_ascore = []
 
             for single_date in football.daterange(start_date, end_date):
-
-                day = str(datetime.strptime(str(single_date)[0:10], '%Y-%m-%d'))[0:10]
-                url = f'https://www.livescore.com/soccer/{str(day)}'
+                day = str(datetime.strptime(str(single_date)[0:10], '%Y-%m-%d'))
+                url = 'https://www.livescore.com/soccer/' + str(day)[0:10]
 
                 options = Options()
                 options.headless = True
@@ -86,35 +89,37 @@ class Football:
                 driver.set_page_load_timeout(10)
 
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
-                series_home = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply tright name')
-                         if x.text != '__home_team__']
-                series_away = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply name')
-                         if x.text != '__away_team__']
-                series_hscore = [int(x.text) for x in soup.find_all('span', class_='hom')
-                         if x.text != '__home_score__' and x.text != '?']
-                series_ascore = [int(x.text) for x in soup.find_all('span', class_='awy')
-                         if x.text != '__away_score__' and x.text != '?']
-                series_date = [day for _ in series_home]
+                homeT = soup.find_all('div', class_='ply tright name')
+                awayT = soup.find_all('div', class_='ply name')
+                hScore = soup.find_all('span', class_='hom')
+                aScore = soup.find_all('span', class_='awy')
 
-                football.team_away.append(series_away)
-                football.score_home.append(series_hscore)
-                football.score_away.append(series_ascore)
-                football.match_date.append(series_date)
-
-                print(football.match_date, series_home, sep='\n')
-
-                elements_scraped += len(series_home)
+                for h, a, hs, aws in zip(homeT, awayT, hScore, aScore):
+                    if h.text == '__home_team__' or hs.text == '?':
+                        pass
+                    else:
+                        series_date.append(str(day)[0:10])
+                        series_home.append(h.text.replace(' *', ''))
+                        series_away.append(a.text.replace(' *', ''))
+                        series_hscore.append(int(hs.text))
+                        series_ascore.append(int(aws.text))
 
                 driver.close()
 
-
-            new_matches = pd.DataFrame({'Date': football.match_date, 'Home Team': football.team_home,
-                                        'Home Score': football.score_home, 'Away Team': football.team_away,
-                                        'Away Score': football.score_away})
-
-            print('New database entries:', new_matches.tail(elements_scraped), sep='\n')
+            print('New database entries:', pd.DataFrame({'Date': series_date, 'Home': series_home, 'Away': series_away,
+                                                         'HS': series_hscore, 'AS': series_ascore}), sep='\n')
 
             print('Writing new data into the database file', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+
+            new_matches = pd.DataFrame({'Date': series_date, 'Home Team': series_home, 'Home Score': series_hscore,
+                                        'Away Team': series_away, 'Away Score': series_ascore})
+            frames = [matches, new_matches]
+            stats = pd.concat(frames, join='inner', ignore_index=True, sort=False)
+            writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'), engine='xlsxwriter')
+            stats.to_excel(writer, sheet_name='Database')
+            writer.save()
+
+            print('database.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         else:
 
@@ -253,12 +258,6 @@ class Football:
         week_length = str(date.today() + timedelta(days=7))
         url = 'https://www.livescore.com/soccer/' + tomorrow
 
-
-        def daterange(tomorrow, week_length):
-            for n in range(int((week_length - tomorrow).days)):
-                yield (tomorrow + timedelta(n)).strftime('%Y-%m-%d')
-
-
         print('Initializing Chrome', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         options = Options()
@@ -298,7 +297,6 @@ class Football:
         print('Calculating Poisson distributions', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         for x, y in zip(haverage, aaverage):
-            print(x, y)
             temp_poisson = football.poissondist(x, y)
             u05.append(temp_poisson['Under 0.5'])
             o05.append(temp_poisson['Over 0.5'])
@@ -418,18 +416,18 @@ if __name__ == '__main__':
 
     football = Football()
 
-    football.match_date = matches['Date'].tolist()
-    football.team_home = matches['Home Team'].tolist()
-    football.team_away = matches['Away Team'].tolist()
-    football.score_home = matches['Home Score'].tolist()
-    football.score_away = matches['Away Score'].tolist()
+    football.match_date = matches['Date']
+    football.team_home = matches['Home Team']
+    football.team_away = matches['Away Team']
+    football.score_home = matches['Home Score']
+    football.score_away = matches['Away Score']
 
     football.scraper()
-    # football.averages()
-    # football.poissoncalc()
-    # football.builder()
+    football.averages()
+    football.poissoncalc()
+    football.builder()
     # football.dataset()
-    # football.upcoming()
+    football.upcoming()
     finish = time.perf_counter()
 
-    print(f"Finished in {(finish - start) // 60} minute(s) and {(finish - start) % 60} second(s)")
+    print(f"Finished in {(finish - start) // 60} minute(s) and {round((finish - start) % 60, 2)} second(s)")
