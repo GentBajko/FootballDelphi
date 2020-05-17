@@ -18,8 +18,7 @@ __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file
 matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
 np.warnings.filterwarnings('ignore')
 
-class Football:
-
+class Football():
 
     def __init__(self, match_date=matches['Date'], team_home=matches['Home Team'], team_away=matches['Away Team'],
                  score_home=matches['Home Score'], score_away=matches['Away Score'], average_home=[], conceded_home=[],
@@ -198,6 +197,8 @@ class Football:
 
         print('Calculating home averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
+        matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
+
         home_avg = []
         home_conceded = []
 
@@ -222,6 +223,7 @@ class Football:
         football.average_away = pd.concat(away_avg).sort_index()
         football.conceded_away = pd.concat(away_conceded).sort_index()
 
+        print(football.score_home, football.score_away)
         print('Finished calculating away averages', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
 
@@ -250,6 +252,33 @@ class Football:
             football.poisson_draw.append(temp_poisson['Draw'])
 
         print('Done calculating Poisson distribution', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+
+
+    def builder(self):
+
+
+        print('Building Database', datetime.now().strftime("%H:%M:%S"), sep=' - ')
+
+        df = pd.DataFrame({
+            'Date': football.match_date, 'Home Team': football.team_home, 'Away Team': football.team_away,
+            'Home Average': football.average_home, 'Away Average': football.average_away,
+            'AVG Conceded Home': football.conceded_home, 'AVG Conceded Away': football.conceded_away,
+            'Home Win': football.poisson_homewin, 'Draw': football.poisson_draw, 'Away Win': football.poisson_awaywin,
+            'Over 0.5': football.poisson_o05, 'Under 0.5': football.poisson_u05, 'Over 1.5': football.poisson_o15,
+            'Under 1.5': football.poisson_u15, 'Over 2.5': football.poisson_o25, 'Under 2.5': football.poisson_u25,
+            'Over 3.5': football.poisson_o35, 'Under 3.5': football.poisson_u35, 'Over 4.5': football.poisson_o45,
+            'Under 4.5': football.poisson_u45, 'Over 5.5': football.poisson_o55, 'Under 5.5': football.poisson_u55,
+            'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno,
+            'Home Score': football.score_home, 'Away Score': football.score_away})
+
+        print(df)
+
+        writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'),
+                                engine='xlsxwriter')
+        df.to_excel(writer, sheet_name='Database')
+        writer.save()
+
+        print('database.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
 
     def upcoming(self):
@@ -324,110 +353,19 @@ class Football:
         print(df, 'upcoming.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep='\n')
 
 
-    def builder(self):
+football = Football()
+football.match_date = matches['Date']
+football.team_home = matches['Home Team']
+football.team_away = matches['Away Team']
+football.score_home = matches['Home Score']
+football.score_away = matches['Away Score']
 
+football.scraper()
+football.averages()
+football.poissoncalc()
+football.builder()
+# football.dataset()
+football.upcoming()
+finish = time.perf_counter()
 
-        print('Building Database', datetime.now().strftime("%H:%M:%S"), sep=' - ')
-
-        df = pd.DataFrame({
-            'Date': football.match_date, 'Home Team': football.team_home, 'Away Team': football.team_away,
-            'Home Average': football.average_home, 'Away Average': football.average_away,
-            'AVG Conceded Home': football.conceded_home, 'AVG Conceded Away': football.conceded_away,
-            'Home Win': football.poisson_homewin, 'Draw': football.poisson_draw, 'Away Win': football.poisson_awaywin,
-            'Over 0.5': football.poisson_o05, 'Under 0.5': football.poisson_u05, 'Over 1.5': football.poisson_o15,
-            'Under 1.5': football.poisson_u15, 'Over 2.5': football.poisson_o25, 'Under 2.5': football.poisson_u25,
-            'Over 3.5': football.poisson_o35, 'Under 3.5': football.poisson_u35, 'Over 4.5': football.poisson_o45,
-            'Under 4.5': football.poisson_u45, 'Over 5.5': football.poisson_o55, 'Under 5.5': football.poisson_u55,
-            'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno,
-            'Home Score': football.score_home, 'Away Score': football.score_away})
-
-        print(df)
-
-        writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'),
-                                engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Database')
-        writer.save()
-
-        print('database.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
-
-
-    def dataset(self):
-
-        df = matches.dropna()
-        winner = []
-
-        for x, y in zip(df['Home Score'], df['Away Score']):
-            if x > y:
-                winner.append(1)
-            else:
-                winner.append(0)
-
-        date = pd.to_datetime(df['Date'])
-        date = pd.Series(date).dt.dayofyear
-        date = pd.Series(sklearn.preprocessing.normalize([date.to_numpy()], norm='max',
-                                                         axis=1).flatten(order='C'))
-        home_avg = pd.Series(sklearn.preprocessing.normalize([df['Home Average']], norm='max',
-                                                             axis=1).flatten(order='C'))
-        away_avg = pd.Series(sklearn.preprocessing.normalize([df['Away Average']], norm='max',
-                                                             axis=1).flatten(order='C'))
-        home_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Home']], norm='max',
-                                                                  axis=1).flatten(order='C'))
-        away_conceded = pd.Series(sklearn.preprocessing.normalize([df['AVG Conceded Away']], norm='max',
-                                                                  axis=1).flatten(order='C'))
-        o05 = pd.Series(sklearn.preprocessing.normalize([df['Over 0.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        u05 = pd.Series(sklearn.preprocessing.normalize([df['Under 0.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        o15 = pd.Series(sklearn.preprocessing.normalize([df['Over 1.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        u15 = pd.Series(sklearn.preprocessing.normalize([df['Under 1.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        o25 = pd.Series(sklearn.preprocessing.normalize([df['Over 2.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        u25 = pd.Series(sklearn.preprocessing.normalize([df['Under 2.5']], norm='max',
-                                                        axis=1).flatten(order='C'))
-        btts = pd.Series(sklearn.preprocessing.normalize([df['BTTS']], norm='max',
-                                                         axis=1).flatten(order='C'))
-        bttsno = pd.Series(sklearn.preprocessing.normalize([df['BTTS No']], norm='max',
-                                                           axis=1).flatten(order='C'))
-        home_score = pd.Series(sklearn.preprocessing.normalize([df['Home Score']], norm='max',
-                                                               axis=1).flatten(order='C'))
-        away_score = pd.Series(sklearn.preprocessing.normalize([df['Away Score']], norm='max',
-                                                               axis=1).flatten(order='C'))
-
-        df = pd.DataFrame({
-            'Date': date, 'Home Average': home_avg,
-            'Away Average': away_avg, 'AVG Conceded Home': home_conceded, 'AVG Conceded Away': away_conceded,
-            'Over 0.5': o05, 'Under 0.5': u05, 'Over 1.5': o15, 'Under 1.5': u15, 'Over 2.5': o25, 'Under 2.5': u25,
-            'BTTS': btts, 'BTTS No': bttsno, 'Home Score': home_score, 'Away Score': away_score, 'Result': winner
-        })
-
-        writer = pd.ExcelWriter(os.path.join(__location__, 'dataset.xlsx'),
-                                engine='xlsxwriter')
-        df.to_excel(writer, sheet_name='Dataset')
-        writer.save()
-
-        print('dataset.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
-
-
-if __name__ == '__main__':
-
-    print(start)
-
-    football = Football()
-
-    football.match_date = matches['Date']
-    football.team_home = matches['Home Team']
-    football.team_away = matches['Away Team']
-    football.score_home = matches['Home Score']
-    football.score_away = matches['Away Score']
-
-    football.scraper()
-    football.averages()
-    football.poissoncalc()
-    football.builder()
-    # football.dataset()
-    football.upcoming()
-    finish = time.perf_counter()
-
-    print(f"Finished in {(finish - start) // 60} minute(s) and {round((finish - start) % 60, 2)} second(s)")
+print(f"Finished in {(finish - start) // 60} minute(s) and {round((finish - start) % 60, 2)} second(s)")
