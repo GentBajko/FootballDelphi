@@ -1,6 +1,9 @@
+import time
+
+start = time.perf_counter()
+
 import os
 import sklearn.preprocessing
-import time
 from datetime import date, timedelta, datetime
 
 import numpy as np
@@ -9,6 +12,7 @@ from bs4 import BeautifulSoup
 from scipy.stats import poisson
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+
 
 __location__ = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 matches = pd.read_excel(os.path.join(__location__, 'database.xlsx'), sheet_name='Database')
@@ -51,6 +55,10 @@ class Football:
         self.poisson_draw = poisson_draw
 
 
+    def daterange(self, start_date, end_date):
+        for n in range(int((end_date - start_date).days)):
+            yield (start_date + timedelta(n)).strftime('%Y-%m-%d')
+
     def scraper(self):
         start_date = datetime.strptime(matches['Date'].tail(1).tolist()[0], '%Y-%m-%d')
         yesterday = str(date.today() - timedelta(days=1))
@@ -62,21 +70,15 @@ class Football:
 
             print('Creating list of dates to scrape', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-            def daterange(start_date, end_date):
-                for n in range(int((end_date - start_date).days)):
-                    yield (start_date + timedelta(n)).strftime('%Y-%m-%d')
-
-            series_date = []
-            series_home = []
-            series_away = []
-            series_hscore = []
-            series_ascore = []
-
             print('Starting the scraping process', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
-            for single_date in daterange(start_date, end_date):
+            elements_scraped = 0
+
+            for single_date in football.daterange(start_date, end_date):
+
                 day = str(datetime.strptime(str(single_date)[0:10], '%Y-%m-%d'))[0:10]
-                url = 'https://www.livescore.com/soccer/' + str(day)
+                url = f'https://www.livescore.com/soccer/{str(day)}'
+
                 options = Options()
                 options.headless = True
                 driver = webdriver.Chrome(os.path.join(__location__, 'chromedriver.exe'), options=options)
@@ -84,42 +86,35 @@ class Football:
                 driver.set_page_load_timeout(10)
 
                 soup = BeautifulSoup(driver.page_source, 'html.parser')
-                homeT = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply tright name')
+                series_home = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply tright name')
                          if x.text != '__home_team__']
-                awayT = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply name')
+                series_away = [x.text.replace(' *', '') for x in soup.find_all('div', class_='ply name')
                          if x.text != '__away_team__']
-                hScore = [int(x.text) for x in soup.find_all('span', class_='hom')
+                series_hscore = [int(x.text) for x in soup.find_all('span', class_='hom')
                          if x.text != '__home_score__' and x.text != '?']
-                aScore = [int(x.text) for x in soup.find_all('span', class_='awy')
+                series_ascore = [int(x.text) for x in soup.find_all('span', class_='awy')
                          if x.text != '__away_score__' and x.text != '?']
+                series_date = [day for _ in series_home]
 
-                for h, a, hs, aws in zip(homeT, awayT, hScore, aScore):
-                    series_date.append(day)
-                    series_home.append(h)
-                    series_away.append(a)
-                    series_hscore.append(hs)
-                    series_ascore.append(aws)
+                football.team_away.append(series_away)
+                football.score_home.append(series_hscore)
+                football.score_away.append(series_ascore)
+                football.match_date.append(series_date)
 
-                print(type(series_home))
-                football.team_home.append(pd.Series(series_home))
-                print(football.team_home)
+                print(football.match_date, series_home, sep='\n')
+
+                elements_scraped += len(series_home)
+
                 driver.close()
-            new_matches = pd.DataFrame({'Date': series_date, 'Home Team': series_home,
-                                        'Home Score': series_hscore, 'Away Team': series_away,
-                                        'Away Score': series_ascore})
 
-            print('New database entries:', new_matches, sep='\n')
+
+            new_matches = pd.DataFrame({'Date': football.match_date, 'Home Team': football.team_home,
+                                        'Home Score': football.score_home, 'Away Team': football.team_away,
+                                        'Away Score': football.score_away})
+
+            print('New database entries:', new_matches.tail(elements_scraped), sep='\n')
 
             print('Writing new data into the database file', datetime.now().strftime("%H:%M:%S"), sep=' - ')
-
-
-            stats = pd.concat([matches, new_matches], join='inner', ignore_index=True, sort=False)
-
-            writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'), engine='xlsxwriter')
-            stats.to_excel(writer, sheet_name='Database')
-            writer.save()
-
-            print('database.xlsx is ready', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
         else:
 
@@ -249,8 +244,6 @@ class Football:
             football.poisson_awaywin.append(temp_poisson['Away Win'])
             football.poisson_draw.append(temp_poisson['Draw'])
 
-        print(len(football.match_date), len(football.poisson_o25), len(football.poisson_homewin), len(football.poisson_u45))
-
         print('Done calculating Poisson distribution', datetime.now().strftime("%H:%M:%S"), sep=' - ')
 
 
@@ -350,6 +343,8 @@ class Football:
             'BTTS': football.poisson_btts, 'BTTS No': football.poisson_bttsno,
             'Home Score': football.score_home, 'Away Score': football.score_away})
 
+        print(df)
+
         writer = pd.ExcelWriter(os.path.join(__location__, 'database.xlsx'),
                                 engine='xlsxwriter')
         df.to_excel(writer, sheet_name='Database')
@@ -419,17 +414,22 @@ class Football:
 
 if __name__ == '__main__':
 
-    start = time.perf_counter()
     print(start)
 
     football = Football()
+
+    football.match_date = matches['Date'].tolist()
+    football.team_home = matches['Home Team'].tolist()
+    football.team_away = matches['Away Team'].tolist()
+    football.score_home = matches['Home Score'].tolist()
+    football.score_away = matches['Away Score'].tolist()
 
     football.scraper()
     # football.averages()
     # football.poissoncalc()
     # football.builder()
     # football.dataset()
-    football.upcoming()
+    # football.upcoming()
     finish = time.perf_counter()
 
-    print(f"Finished in {round(finish - start, 2)} second(s)")
+    print(f"Finished in {(finish - start) // 60} minute(s) and {(finish - start) % 60} second(s)")
