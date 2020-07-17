@@ -94,9 +94,7 @@ class Football():
                 aScore = soup.find_all('span', class_='awy')
 
                 for h, a, hs, aws in zip(homeT, awayT, hScore, aScore):
-                    if h.text == '__home_team__' or hs.text == '?':
-                        pass
-                    else:
+                    if h.text != '__home_team__' and hs.text != '?':
                         series_date.append(str(day)[0:10])
                         series_home.append(h.text.replace(' *', ''))
                         series_away.append(a.text.replace(' *', ''))
