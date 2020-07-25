@@ -24,6 +24,8 @@ class API:
            worth of matches for that championship. Datetime format is "%Y-%m-%d".
     finish: Get data until this date. Default date is whatever the current date is when
             the script is run. Datetime format is "%Y-%m-%d".
+    EXAMPLE: Bundesliga = API(request="competitions", champinship="BL1", start="2019-01-01",
+                              finish=datetime.today().strftime("%Y-%m-%d")
 
     For total matches:
     championship: None
@@ -32,6 +34,10 @@ class API:
            Datetime format is "%Y-%m-%d".
     finish: Default date is whatever the current date is when the script
             is run. Datetime format is "%Y-%m-%d".
+
+    EXAMPLE: All_Matches = API(request="competitions", champinship="BL1",
+                               start=datetime.today().strftime("%Y-%m-%d") - timedelta(days=1),
+                              finish=datetime.today().strftime("%Y-%m-%d")
     """
 
     # pylint: disable=too-many-instance-attributes
@@ -98,7 +104,7 @@ class API:
         """
         if "data" not in os.listdir(os.getcwd()):
             os.mkdir("data")
-        self.data.to_csv(f"data/{self.championship} "
+        self.data.to_csv(f"data/{self.id} "
                          f"{datetime.today().strftime('%Y-%m-%d')}.csv")
         return self
 
@@ -106,5 +112,5 @@ class API:
 if __name__ == "__main__":
     Ligue1 = API(championship="Ligue 1")
     Matches = API(request="matches")
+    Ligue1.export()
     Matches.export()
-
