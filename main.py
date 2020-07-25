@@ -3,7 +3,6 @@ import time
 start = time.perf_counter()
 
 import os
-import sklearn.preprocessing
 from datetime import date, timedelta, datetime
 
 import numpy as np
