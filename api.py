@@ -3,14 +3,12 @@ from datetime import datetime, timedelta
 
 import pandas as pd
 import requests
-from varname import varname
 
 competitions = {"Bundesliga": "BL1", "Serie A": "SA", "Premiere League": "PL",
-                "Superliga Argentina": "ASL", "Brazil Serie A": "BSA",
                 "England Championship": "ELC", "Champions League": "CL",
-                "Europa League": "EC", "Ligue 1": "FL1", "Eredivisie": "DED",
-                "Primiera Liga": "PPL", "Primera Division": "PL",
-                "World Cup": "WC"}
+                "Ligue 1": "FL1", "Eredivisie": "DED",
+                "Primiera Liga": "PPL", "Primera Division": "PD"}
+# Also "Brazil Serie A": "BSA"
 
 
 class API:
@@ -52,7 +50,6 @@ class API:
         self.finish = finish if self.request == "competitions" \
             else datetime.today().strftime("%Y-%m-%d")
         self.status = 'FINISHED'
-        self.id = varname()
         if not self.start:
             self.url = f'https://api.football-data.org/v2/{self.request}/' \
                        f'{self.championship}/matches?status={self.status}'
@@ -85,14 +82,14 @@ class API:
                              'homeTeam.id': 'homeTeamID', 'awayTeam.id': 'awayTeamID',
                              'homeTeam.name': 'homeTeam', 'awayTeam.name': 'awayTeam'})
                 self.data["date"] = self.data["date"].str.replace("Z", "").str.replace("T", " ")
-                print(f"Initialized {self.id} with URL {self.url}")
+                print(f"Initialized {self.championship} with URL {self.url}")
             else:
                 print(f"Error {self.response['errorCode']}: {self.response['message']}"
                       if 'errorCode' in self.response
-                      else f"No data for {self.id}")
+                      else f"No data for {self.championship}")
         except AttributeError:
             self.data = pd.DataFrame()
-            print(f"{self.id} currently has no data.")
+            print(f"{self.championship} currently has no data.")
 
     def __getitem__(self, item):
         return self.data[item]
@@ -104,13 +101,22 @@ class API:
         """
         if "data" not in os.listdir(os.getcwd()):
             os.mkdir("data")
-        self.data.to_csv(f"data/{self.id} "
-                         f"{datetime.today().strftime('%Y-%m-%d')}.csv")
+        if self.request == "matches":
+            historical = pd.read_csv('data/historical.csv', encoding='utf-8')
+            self.data = pd.merge([self.data,
+                                  historical]).drop_duplicates().reset_index()
+            self.data.to_csv(f"historical.csv", encoding="utf-8")
+        else:
+            self.data.to_csv(f"data/{self.championship} "
+                             f"{datetime.today().strftime('%Y-%m-%d')}.csv",
+                             encoding='utf-8')
         return self
 
 
+AllMatches = API(request="matches")
+
 if __name__ == "__main__":
-    Ligue1 = API(championship="Ligue 1")
-    Matches = API(request="matches")
-    Ligue1.export()
-    Matches.export()
+    # AllMatches.export()
+
+    Brazil = API(championship='BSA')
+    Brazil.export()
