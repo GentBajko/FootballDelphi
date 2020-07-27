@@ -5,10 +5,10 @@ import pandas as pd
 import requests
 
 competitions = {"Bundesliga": "BL1", "Serie A": "SA", "Premiere League": "PL",
-                "England Championship": "ELC", "Champions League": "CL",
+                "England Championship": "ELC",
                 "Ligue 1": "FL1", "Eredivisie": "DED",
                 "Primiera Liga": "PPL", "Primera Division": "PD"}
-# Also "Brazil Serie A": "BSA"
+# Also "Brazil Serie A": "BSA", "Champions League": "CL",
 
 
 class API:

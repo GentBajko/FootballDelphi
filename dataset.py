@@ -16,8 +16,7 @@ class Dataset:
         self.all_matches = API(request="matches").data
         self.data = pd.concat(
             [self.championships[df] for df in self.championships],
-            join="outer").reset_index().drop_duplicates()
-        print("Dataset is ready")
+            join="outer").reset_index().drop_duplicates().drop('index', axis=1)
         if 'historical.csv' not in os.listdir(os.path.join(os.getcwd(), 'data')):
             pd.DataFrame().to_csv('data/historical.csv', encoding='utf-8')
         self.historical = pd.read_csv('data/historical.csv', encoding='utf-8')
@@ -31,13 +30,17 @@ class Dataset:
 
     def export_dataset(self):
         # TODO: Read file and concat to + remove duplicates
-        self.data.to_csv('data/dataset.csv')
+        if 'dataset.csv' in os.listdir(os.path.join(os.getcwd(), 'data')):
+            df = pd.read_csv('data/dataset.csv')
+            self.data = pd.concat([self.data,
+                                   df]).drop_duplicates().reset_index(level=0, drop=True)
+        self.data.to_csv('data/dataset.csv', index=True)
+        return self
 
 
 dataset = Dataset()
 
 if __name__ == "__main__":
-
     dataset.view_dataset('championships').export_dataset()
 
     print(f"Created dataset in {round(perf_counter() - dataset_start, 2)} seconds")
