@@ -103,8 +103,8 @@ class API:
             os.mkdir("data")
         if self.request == "matches":
             historical = pd.read_csv('data/historical.csv', encoding='utf-8')
-            self.data = pd.merge([self.data,
-                                  historical]).drop_duplicates().reset_index()
+            self.data = pd.concat([self.data,
+                                  historical], axis=0, ignore_index=True).drop_duplicates()
             self.data.to_csv(f"historical.csv", encoding="utf-8")
         else:
             self.data.to_csv(f"data/{self.championship} "
