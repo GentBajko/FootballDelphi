@@ -11,7 +11,7 @@ class Stats:
     # TODO: Poisson Distribution conceeded. Maybe (Pmf Avg + Pmf Cond) / 2
 
     def __init__(self):
-        self.data = pd.read_csv('data/dataset.csv', index_col=0).dropna()
+        self.data = pd.read_csv('data/dataset.csv')
 
     def averages(self):
         """
@@ -302,5 +302,5 @@ class Stats:
 stats = Stats()
 
 if __name__ == "__main__":
-    stats.poisson_fulltime().poisson_halftime().export()
+    stats.averages().poisson_fulltime().poisson_halftime().export()
     print(f'Ran in {round(perf_counter() - start_stats, 2)} seconds')

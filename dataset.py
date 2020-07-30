@@ -13,19 +13,14 @@ class Dataset:
     def __init__(self, objects=None):
         self.objects = competitions if objects is None else objects
         self.championships = {league: API(league).export().data for league in self.objects.keys()}
-        self.all_matches = API(request="matches").data
         self.data = pd.concat(
             [self.championships[df] for df in self.championships],
             join="outer", ignore_index=True).drop_duplicates()
-        if 'historical.csv' not in os.listdir(os.path.join(os.getcwd(), 'data')):
-            pd.DataFrame().to_csv('data/historical.csv', encoding='utf-8')
-        self.historical = pd.read_csv('data/historical.csv', encoding='utf-8')
+        self.data['winner'] = self.data['winner'].map({'HOME_TEAM': 1, 'AWAY_TEAM': 2, 'DRAW': 3})
+        self.data['duration'] = self.data['duration'].map({'REGULAR': 1, 'PENALTY_SHOOTOUT': 2})
 
-    def view_dataset(self, dataframe: str):
-        if dataframe == "championships":
-            print(self.data)
-        elif dataframe == 'historical':
-            print(self.all_matches)
+    def view_dataset(self):
+        print(self.data)
         return self
 
     def export_dataset(self):
@@ -37,10 +32,14 @@ class Dataset:
         self.data.to_csv('data/dataset.csv', index=False)
         return self
 
+    def to_postgres(self):
+        pass
+
+
 
 dataset = Dataset()
 
 if __name__ == "__main__":
-    dataset.view_dataset('championships').export_dataset()
-
+    dataset.export_dataset()
+    # stats.averages().export()
     print(f"Created dataset in {round(perf_counter() - dataset_start, 2)} seconds")

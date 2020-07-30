@@ -5,10 +5,10 @@ import pandas as pd
 import requests
 
 competitions = {"Bundesliga": "BL1", "Serie A": "SA", "Premiere League": "PL",
-                "England Championship": "ELC",
+                "England Championship": "ELC", "Brazil Serie A": "BSA",
                 "Ligue 1": "FL1", "Eredivisie": "DED",
                 "Primiera Liga": "PPL", "Primera Division": "PD"}
-# Also "Brazil Serie A": "BSA", "Champions League": "CL",
+# Also  "Champions League": "CL",
 
 
 class API:
@@ -113,7 +113,7 @@ class API:
         return self
 
 
-AllMatches = API(request="matches")
+# AllMatches = API(request="matches")
 
 if __name__ == "__main__":
     # AllMatches.export()
