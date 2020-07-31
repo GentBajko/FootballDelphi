@@ -13,9 +13,9 @@ class Stats:
     def __init__(self, file):
         self.file = file
         if self.file.lower() == 'dataset':
-            self.data = pd.read_csv('data/dataset.csv')
+            self.data = pd.read_csv('data/dataset.csv', index_col=0)
         elif self.file.lower() == 'upcoming':
-            self.data = pd.read_csv('data/upcoming.csv')
+            self.data = pd.read_csv('data/upcoming.csv', index_col=0)
         else:
             raise ValueError
 
@@ -61,6 +61,42 @@ class Stats:
             self.data[
                 self.data['awayTeam'] == team]['homeTeamHt'].expanding(2).mean()[index], 2)
             for team, index in zip(self.data['awayTeam'], self.data['awayTeam'].index)]
+        return self
+
+    def predict(self):
+        """
+        Calculates the expaning mean for each match and selects the one with the matching
+        index for that specific match.
+        """
+        database = pd.read_csv('data/dataset.csv')
+        # Fulltime Home
+        self.data['homeAverageFt'] = pd.Series([round(
+            database[database['homeTeam'] == team]['homeTeamFt'].mean(), 2)
+            for team in zip(database['homeTeam'], database['homeTeam'])])
+        self.data['homeConcededFt'] = pd.Series([round(
+            database[database['homeTeam'] == team]['awayTeamFt'].mean(), 2)
+            for team in database['homeTeam']])
+        # Halftime Home
+        self.data['homeAverageHt'] = pd.Series([round(
+            database[database['homeTeam'] == team]['homeTeamHt'].mean(), 2)
+            for team in database['homeTeam']])
+        self.data['homeConcededHt'] = pd.Series([round(
+            database[database['homeTeam'] == team]['awayTeamHt'].mean(), 2)
+            for team in database['homeTeam']])
+        # Fulltime Away
+        self.data['awayAverageFt'] = pd.Series([round(
+            database[database['awayTeam'] == team]
+            ['awayTeamFt'].mean(), 2) for team in database['awayTeam']])
+        self.data['awayConcededFt'] = pd.Series([round(
+            database[database['awayTeam'] == team]['homeTeamFt'].mean(), 2)
+            for team in database['awayTeam']])
+        # Halftime Away
+        self.data['awayAverageHt'] = pd.Series([round(
+            database[database['awayTeam'] == team]['awayTeamHt'].mean(), 2)
+            for team in database['awayTeam']])
+        self.data['awayConcededHt'] = pd.Series([round(
+            database[database['awayTeam'] == team]['homeTeamHt'].mean(), 2)
+            for team in database['awayTeam']])
         return self
 
     def poisson_fulltime(self):
@@ -309,6 +345,9 @@ class Stats:
 
 
 if __name__ == "__main__":
-    stats = Stats('upcoming')
-    stats.averages().poisson_fulltime().poisson_halftime().export()
+    datastat = Stats('dataset')
+    datastat.averages().poisson_halftime().poisson_fulltime().export()
+
+    future_stats = Stats('upcoming')
+    future_stats.predict().poisson_fulltime().poisson_halftime().export()
     print(f'Ran in {round(perf_counter() - start_stats, 2)} seconds')

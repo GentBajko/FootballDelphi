@@ -23,17 +23,17 @@ class Dataset:
         return self
 
     def export_dataset(self):
-        # TODO: Read file and concat to + remove duplicates
+        # TODO: Remove duplicated after concatenation
         if 'dataset.csv' in os.listdir(os.path.join(os.getcwd(), 'data')):
-            df = pd.read_csv('data/dataset.csv')
+            df = pd.read_csv('data/dataset.csv', index_col=0)
             self.data = pd.concat([self.data,
                                    df]).drop_duplicates()
+            print('Concatenated')
         self.data.to_csv('data/dataset.csv', index=False)
         return self
 
     def to_postgres(self):
         pass
-
 
 
 dataset = Dataset()
