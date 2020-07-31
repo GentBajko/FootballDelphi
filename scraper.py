@@ -9,10 +9,10 @@ class Scraper:
     def __init__(self, method, start_date=(datetime.today() + timedelta(days=1)).strftime("%Y-%m-%d"),
                  end_date=(datetime.today() + timedelta(days=7)).strftime("%Y-%m-%d")):
         self.method = method
-        if self.method == 'upcoming':
+        if self.method.lower() == 'upcoming':
             self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
             self.start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        elif self.method == 'past':
+        elif self.method.lower() == 'past':
             self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
             self.start_date = datetime.strptime(start_date, '%Y-%m-%d')
         self.urls = [f'https://www.livescore.com/soccer/{(self.start_date + timedelta(day)).strftime("%Y-%m-%d")}'
@@ -56,7 +56,10 @@ class Scraper:
         return self
 
     def export(self):
-        self.data.to_csv('data/upcoming.csv')
+        if self.method.lower() == 'upcoming':
+            self.data.to_csv('data/upcoming.csv')
+        if self.method.lower() == 'past':
+            self.data.to_csv('data/database.csv')
         return self
 
 

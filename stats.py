@@ -9,9 +9,15 @@ start_stats = perf_counter()
 class Stats:
 
     # TODO: Poisson Distribution conceeded. Maybe (Pmf Avg + Pmf Cond) / 2 and stats for upcoming matches
-
-    def __init__(self):
-        self.data = pd.read_csv('data/dataset.csv')
+    # TODO: add upcoming averages to make calculations
+    def __init__(self, file):
+        self.file = file
+        if self.file.lower() == 'dataset':
+            self.data = pd.read_csv('data/dataset.csv')
+        elif self.file.lower() == 'upcoming':
+            self.data = pd.read_csv('data/upcoming.csv')
+        else:
+            raise ValueError
 
     def averages(self):
         """
@@ -296,11 +302,13 @@ class Stats:
         return self
 
     def export(self):
-        self.data.to_csv('data/dataset.csv', index=False)
+        if self.file.lower() == 'dataset':
+            self.data.to_csv('data/dataset.csv', index=False)
+        elif self.file.lower() == 'upcoming':
+            self.data.to_csv('data/upcoming.csv', index=False)
 
-
-stats = Stats()
 
 if __name__ == "__main__":
+    stats = Stats('upcoming')
     stats.averages().poisson_fulltime().poisson_halftime().export()
     print(f'Ran in {round(perf_counter() - start_stats, 2)} seconds')
