@@ -5,18 +5,19 @@ import os
 
 
 class Scraper:
-
-    def __init__(self, method, start_date=(datetime.today() + timedelta(days=1)).strftime("%Y-%m-%d"),
-                 end_date=(datetime.today() + timedelta(days=7)).strftime("%Y-%m-%d")):
+    def __init__(self, method, start_date=None,
+                 end_date=None):
         self.method = method
         if self.method.lower() == 'upcoming':
-            self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
-            self.start_date = datetime.strptime(start_date, '%Y-%m-%d')
+            self.start_date = (datetime.today() + timedelta(days=1))
+            self.end_date = (datetime.today() + timedelta(days=7))
         elif self.method.lower() == 'past':
-            self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
             self.start_date = datetime.strptime(start_date, '%Y-%m-%d')
-        self.urls = [f'https://www.livescore.com/soccer/{(self.start_date + timedelta(day)).strftime("%Y-%m-%d")}'
-                     for day in range(int((self.end_date - self.start_date).days))]
+            self.end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        else:
+            raise ValueError
+        self.urls = (f'https://www.livescore.com/soccer/{(self.start_date + timedelta(day)).strftime("%Y-%m-%d")}'
+                     for day in range(int((self.end_date - self.start_date).days)))
         self.options = webdriver.ChromeOptions()
         self.options.headless = True
         self.driver = webdriver.Chrome(os.path.join(os.getcwd(), 'chromedriver.exe'), options=self.options)
@@ -33,26 +34,28 @@ class Scraper:
             away_team = [element.text for element in
                          self.driver.find_elements_by_xpath('//div[@class="ply name"]')]
             date = [url[33:len(url)] for _ in home_team]
-            if self.start_date < datetime.today():
+            if self.method.lower() == 'past':
                 home_score = [element.text for element in
-                              self.driver.find_elements_by_xpath('//div[@class="hom"]')]
+                              self.driver.find_elements_by_xpath('//span[@class="hom"]')]
                 away_score = [element.text for element in
-                              self.driver.find_elements_by_xpath('//div[@class="awy"]')]
+                              self.driver.find_elements_by_xpath('//span[@class="awy"]')]
+                print(len(home_team), len(home_score))
                 new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team,
                                          'homeTeamFt': home_score, 'awayTeamFt': away_score})
+                print(new_data)
                 if not self.data.empty:
                     self.data = pd.concat([self.data, new_data])
                 else:
                     self.data = self.data.append(new_data, ignore_index=True)
-            else:
+            elif self.method.lower() == 'upcoming':
                 new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team})
                 if not self.data.empty:
                     self.data = pd.concat([self.data, new_data])
                 else:
                     self.data = self.data.append(new_data, ignore_index=True)
+                print(new_data)
         self.driver.close()
-        self.data = self.data[:-1]
-        print(self.data.reset_index().drop('index', axis=1))
+        self.data = self.data.reset_index().drop('index', axis=1)[:-1]
         return self
 
     def export(self):
@@ -65,5 +68,6 @@ class Scraper:
 
 if __name__ == "__main__":
     # scraper = Scraper('2020-07-29', '2020-07-30')
-    scraper = Scraper()
-    scraper.scrape().export()
+    scraper = Scraper('past', '2019-08-02', '2020-08-01')
+    scraper.scrape()
+    print(scraper.data)
