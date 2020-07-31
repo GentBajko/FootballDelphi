@@ -1,0 +1,751 @@
+,date,homeTeam,awayTeam
+0,2020-08-01,Arsenal,Chelsea
+1,2020-08-01,Boston United,Altrincham
+2,2020-08-01,Weymouth,Dartford
+3,2020-08-01,CD Lealtad,Alcoyano
+4,2020-08-01,Brescia,Sampdoria
+5,2020-08-01,Milan,Cagliari
+6,2020-08-01,Atalanta,Inter
+7,2020-08-01,Juventus,Roma
+8,2020-08-01,Napoli,Lazio
+9,2020-08-01,NAC Breda,SC Heerenveen
+10,2020-08-01,FC Utrecht,AZ Alkmaar
+11,2020-08-01,FC Groningen,Heracles
+12,2020-08-01,Club Brugge,Royal Antwerp
+13,2020-08-01,Benfica,FC Porto
+14,2020-08-01,Aberdeen,Rangers
+15,2020-08-01,Dundee United,St. Johnstone
+16,2020-08-01,Hibernian,Kilmarnock
+17,2020-08-01,St. Mirren,Livingston
+18,2020-08-01,Kortrijk,Deinze
+19,2020-08-01,Metz,KV Mechelen
+20,2020-08-01,Bordeaux,Nantes
+21,2020-08-01,Genk,Lens
+22,2020-08-01,Oostende,Cercle Brugge
+23,2020-08-01,Lille,Anderlecht
+24,2020-08-01,Reims,Standard Liege
+25,2020-08-01,Dijon,Sochaux
+26,2020-08-01,Sporting Charleroi,AC Ajaccio
+27,2020-08-01,Cambuur,PEC Zwolle
+28,2020-08-01,DAC 1904 Dunajska Streda,Nice
+29,2020-08-01,Nantes,Sporting Charleroi
+30,2020-08-01,Reims,Standard Liege
+31,2020-08-01,Eintracht Frankfurt,Monaco
+32,2020-08-01,Nancy,Strasbourg
+33,2020-08-01,Rennes,Angers
+34,2020-08-01,Saint-Etienne,Bordeaux
+35,2020-08-01,Zulte Waregem,Gent
+36,2020-08-01,SC Bastia,Montpellier
+37,2020-08-01,Fluminense,Botafogo RJ
+38,2020-08-01,Sandefjord,Molde
+39,2020-08-01,Brann,Vaalerenga
+40,2020-08-01,Fredrikstad,Skeid
+41,2020-08-01,Kjelsaas,Eidsvold TF
+42,2020-08-01,Moss,Alta
+43,2020-08-01,Tromsdalen,Hoedd
+44,2020-08-01,Sotra Sportsklubb,Notodden
+45,2020-08-01,Arendal Fotball,Levanger
+46,2020-08-01,Arendal Fotball,Vard Haugesund
+47,2020-08-01,Baerum,Flekkeroey
+48,2020-08-01,Bryne,Fram Larvik
+49,2020-08-01,Egersund,Baerum
+50,2020-08-01,Flekkeroey,Vard Haugesund
+51,2020-08-01,Fram Larvik,Asker
+52,2020-08-01,Arna-Bjoernar,Vaalerenga
+53,2020-08-01,Lyn Fotball,LSK Kvinner
+54,2020-08-01,Kolbotn,Roea
+55,2020-08-01,Djurgaarden,Haecken
+56,2020-08-01,Oerebro,Falkenbergs FF
+57,2020-08-01,AFC Eskilstuna,Oesters IF
+58,2020-08-01,GIF Sundsvall,Degerfors
+59,2020-08-01,Ljungskile,Halmstads BK
+60,2020-08-01,Assyriska BK,Onsala BK
+61,2020-08-01,IFK Stocksund,Vasalunds IF
+62,2020-08-01,FC Inter,IFK Mariehamn
+63,2020-08-01,HJK,KuPS
+64,2020-08-01,Ilves,HIFK
+65,2020-08-01,RoPS,TPS
+66,2020-08-01,SJK,Haka
+67,2020-08-01,EIF,FC KTP
+68,2020-08-01,AC Oulu,FF Jaro
+69,2020-08-01,MYPA,AC Kajaani
+70,2020-08-01,VPS,KPV
+71,2020-08-01,FC Viikingit,EPS
+72,2020-08-01,PK Keski-Uusimaa,PK-35
+73,2020-08-01,FC Reipas,PEPO Lappeenranta
+74,2020-08-01,NJS,JaePS
+75,2020-08-01,KaaPo,Pargas IF
+76,2020-08-01,SalPa,HJS Akatemia
+77,2020-08-01,FC Jazz,Pallo-Iirot
+78,2020-08-01,SC KuFu-98,JIPPO
+79,2020-08-01,Kemi City FC,RoPS II
+80,2020-08-01,FC Wacker Innsbruck II,Kufstein
+81,2020-08-01,FC Kitzbuehel,Reichenau
+82,2020-08-01,SC Imst,Hall
+83,2020-08-01,FC Lauterach,Dornbirner SV
+84,2020-08-01,Rankweil,Hohenems
+85,2020-08-01,SW Bregenz,Roefix Roethis
+86,2020-08-01,Shelbourne,Waterford FC
+87,2020-08-01,Shamrock Rovers,Finn Harps
+88,2020-08-01,Sligo Rovers,Finn Harps
+89,2020-08-01,Cobh Ramblers,Galway United FC
+90,2020-08-01,Longford Town,Athlone Town
+91,2020-08-01,DAC Dunajska Streda U19,Zemplin Michalovce U19
+92,2020-08-01,Nitra U19,Poprad FK U19
+93,2020-08-01,Podbrezova U19,Ruzomberok U19
+94,2020-08-01,Slovan Bratislava U19,Senica U19
+95,2020-08-01,Trencín U19,Spartak Trnava U19
+96,2020-08-01,Zilina U19,Dukla Banska Bystrica U19
+97,2020-08-01,Nizhny Novgorod,Tom Tomsk
+98,2020-08-01,Chertanovo Moscow,Spartak Moscow II
+99,2020-08-01,Irtysh,FC Yenisey Krasnoyarsk
+100,2020-08-01,Dinamo Briansk,FC Orenburg
+101,2020-08-01,Tekstilshchik,Veles Moscow
+102,2020-08-01,FC Volgar,FC Krasnodar II
+103,2020-08-01,Fakel,Akron Togliatti
+104,2020-08-01,Neftekhimik,Chayka
+105,2020-08-01,FC Alania Vladikavkaz,SKA-Khabarovsk
+106,2020-08-01,Metalurg Zaporizhia,FC Hirnyk-Sport
+107,2020-08-01,Rijeka,NK Lokomotiva
+108,2020-08-01,Napredak,Partizan Beograd
+109,2020-08-01,Cukaricki,Indjija
+110,2020-08-01,FK Crvena Zvezda,Novi Pazar
+111,2020-08-01,Macva Sabac,Backa Backa Palanka
+112,2020-08-01,Proleter,Rad Beograd
+113,2020-08-01,Radnicki Nis,FK Metalac
+114,2020-08-01,Vozdovac,FK Radnik Surdulica
+115,2020-08-01,Botosani,Gaz Metan Medias
+116,2020-08-01,FC Academica Clinceni,Hermannstadt
+117,2020-08-01,FC Viitorul Constanta,Sepsi OSK
+118,2020-08-01,Sepsi OSK,Dinamo Bucuresti
+119,2020-08-01,Smolevichy,Belshina Bobruisk
+120,2020-08-01,Slavia Mozyr,Isloch
+121,2020-08-01,Neman Grodno,Dinamo Minsk
+122,2020-08-01,Gorodeya Reserve,Energetyk BGU Resreve
+123,2020-08-01,Minsk Reserve,FK Ruh Brest Reserves
+124,2020-08-01,Torpedo Zhodino Reserve,BATE Reserve
+125,2020-08-01,Banga Gargzdai,FK Riteriai
+126,2020-08-01,Zalgiris Vilnius B,BFA
+127,2020-08-01,FK Kauno Zalgiris B,FK Minija
+128,2020-08-01,Vilnius Vytis,FA Siauliai
+129,2020-08-01,TJK Legion,Paide Linnameeskond
+130,2020-08-01,Narva Trans,FC Kuressaare
+131,2020-08-01,FCI Levadia U21,Flora Tallinn U21
+132,2020-08-01,Maardu Linnameeskond,FC Kohtla-Jaerve
+133,2020-08-01,Nomme United,Vaendra JK Vaprus
+134,2020-08-01,Tammeka U21,FC Elva
+135,2020-08-01,Parnu Sadam,FC Puhkus Mehhikos
+136,2020-08-01,FC Floresti,FC Sheriff
+137,2020-08-01,CS Petrocub,FC Sfintul Gheorghe
+138,2020-08-01,Sloboda Tuzla,Radnik Bijeljina
+139,2020-08-01,Borac Banja Luka,FK Mladost Doboj Kakanj
+140,2020-08-01,Zrinjski Mostar,Olimpik Sarajevo
+141,2020-08-01,Zeljeznicar,FK Velez Mostar
+142,2020-08-01,07 Vestur,Klaksvik II
+143,2020-08-01,HB Torshavn II,B68 Toftir
+144,2020-08-01,FC Hoyvik,B36 Torshavn II
+145,2020-08-01,Vikingur II,B71 Sandur
+146,2020-08-01,NSI Runavik II,AB Argir II
+147,2020-08-01,Inter de Limeira,Guarani
+148,2020-08-01,Ceara,Bahia
+149,2020-08-01,Atletico Tubarao,Concordia Atletico
+150,2020-08-01,Cruzeiro,Patrocinense
+151,2020-08-01,Sousa,Campinense
+152,2020-08-01,Botafogo PB,Treze
+153,2020-08-01,Confianca,Freipaulistano
+154,2020-08-01,General Diaz,12 de Octubre
+155,2020-08-01,Sol de America,Nacional
+156,2020-08-01,Puebla,Cruz Azul
+157,2020-08-01,FC Juarez,Necaxa
+158,2020-08-01,Orlando City,Los Angeles FC
+159,2020-08-01,Tampa Bay Rowdies,Charleston Battery
+160,2020-08-01,Forward Madison FC,Greenville Triumph SC
+161,2020-08-01,Chattanooga Red Wolves SC,FC Tucson
+162,2020-08-01,Managua U20,CD Junior Managua U20
+163,2020-08-01,Walter Ferretti U20,Real Madriz U20
+164,2020-08-01,Nagoya Grampus Eight,Kashiwa Reysol
+165,2020-08-01,Vegalta Sendai,Yokohama F.Marinos
+166,2020-08-01,Yokohama FC,Sanfrecce Hiroshima
+167,2020-08-01,FC Tokyo,Sagan Tosu
+168,2020-08-01,Gamba Osaka,Kawasaki Frontale
+169,2020-08-01,Oita Trinita,Kashima Antlers
+170,2020-08-01,Shonan Bellmare,Cerezo Osaka
+171,2020-08-01,Urawa Red Diamonds,Shimizu S-Pulse
+172,2020-08-01,Fagiano Okayama FC,FC Ryukyu
+173,2020-08-01,Beijing Guoan,Wuhan Zall
+174,2020-08-01,Shijiazhuang Ever Bright,Qingdao Huanghai
+175,2020-08-01,Jeonbuk FC,Pohang Steelers
+176,2020-08-01,Seongnam FC,FC Seoul
+177,2020-08-01,Busan I'Park,Pohang Steelers
+178,2020-08-01,Daegu FC,Seongnam FC
+179,2020-08-01,Gangwon FC,Jeonbuk FC
+180,2020-08-01,Incheon United,Gwangju FC
+181,2020-08-01,Chungnam Asan FC,Daejeon Citizen
+182,2020-08-01,Jeju United,Jeonnam Dragons
+183,2020-08-01,Suwon FC,Ansan Greeners
+184,2020-08-01,Chuncheon FC,Cheonan City
+185,2020-08-01,Asia Euro United,Naga World FC
+186,2020-08-01,Kirivong Sok Sen Chey FC,National Defense
+187,2020-08-01,Phnom Penh,Soltilo Angkor FC
+188,2020-08-01,Dinamo Tbilisi,Chikhura
+189,2020-08-01,Lokomotivi Tbilisi,Torpedo Kutaisi
+190,2020-08-01,Nassaji Mazandaran FC,Persepolis
+191,2020-08-01,Gol Gohar,Foolad Khuzestan
+192,2020-08-01,Pars Jonoubi Jam Bushehr,Shahin
+193,2020-08-01,Esteghlal,Sepahan
+194,2020-08-01,Rakhine United FC,Sagaing United FC
+195,2020-08-01,Shan United,Hantharwady United FC
+196,2020-08-01,Southern Myanmar FC,Zwekapin United FC
+197,2020-08-01,Yangon United,Magwe FC
+198,2020-08-01,Al-Rayyan,Al-Arabi
+199,2020-08-01,Al-Sailiya,Al-Shahaniya
+200,2020-08-01,Melbourne City FC,Sydney FC
+201,2020-08-01,Mindil Aces,Port Darwin
+202,2020-08-01,University Azzurri FC,Hellenic
+203,2020-08-01,Brisbane City,Lions FC
+204,2020-08-01,Gold Coast Knights,Eastern Suburbs
+205,2020-08-01,Redlands United,Brisbane Strikers
+206,2020-08-01,Capalaba,Magpies Crusaders
+207,2020-08-01,Armadale,Perth Glory Youth
+208,2020-08-01,Bayswater City,Floreat Athena
+209,2020-08-01,Bayswater City,Perth Glory Youth
+210,2020-08-01,Cockburn City,Balcatta
+211,2020-08-01,Cockburn City,Sorrento
+212,2020-08-01,ECU Joondalup,Armadale
+213,2020-08-01,Gwelup Croatia,Floreat Athena
+214,2020-08-01,Gwelup Croatia,Rockingham City FC
+215,2020-08-01,Inglewood United,ECU Joondalup
+216,2020-08-01,Inglewood United,Perth
+217,2020-08-01,Rockingham City FC,Balcatta
+218,2020-08-01,Sorrento,Perth
+219,2020-08-01,Adelaide City,Campbelltown City
+220,2020-08-01,Cumberland United,Adelaide Raiders
+221,2020-08-01,Modbury Jets,Adelaide Blue Eagles
+222,2020-08-01,North Eastern Metro Stars,Adelaide United Youth
+223,2020-08-01,Para Hills Knights,Adelaide Comets
+224,2020-08-01,Adelaide Olympic,Croydon Kings
+225,2020-08-01,Canberra Olympic,Monaro Panthers
+226,2020-08-01,Woden Weston FC,Monaro Panthers
+227,2020-08-01,Woden Weston FC,Tuggeranong United
+228,2020-08-01,Belconnen United,Canberra FC
+229,2020-08-01,Lambton Jaffas FC,Newcastle Olympic
+230,2020-08-01,Clarence Zebras,Olympia FC Warriors
+231,2020-08-01,South Hobart,Glenorchy Knights
+232,2020-08-01,Devonport City,Olympia FC Warriors
+233,2020-08-01,Riverside Olympic,Devonport City
+234,2020-08-01,Clarence Zebras,Kingborough Lions
+235,2020-08-01,Kingborough Lions,Glenorchy Knights
+236,2020-08-01,Launceston City,Riverside Olympic
+237,2020-08-01,Stop Out,North Wellington
+238,2020-08-01,Waterside Karori,Napier City Rovers
+239,2020-08-01,Wellington Olympic,Miramar
+240,2020-08-01,Ba FC,Suva FA
+241,2020-08-01,Mbao,Ihefu FC
+242,2020-08-01,Mbeya City,Geita Gold FC
+243,2020-08-01,ABFF U19 (w),BOTSOR (w)
+244,2020-08-01,Dnepr Mogilev (w),Zorka-BDU (w)
+245,2020-08-01,,
+0,2020-08-02,Harrogate Town,Notts County
+1,2020-08-02,Almeria,Girona
+2,2020-08-02,Real Zaragoza,Elche
+3,2020-08-02,CD Marino,Linares Deportivo
+4,2020-08-02,SPAL,Fiorentina
+5,2020-08-02,Bologna,Torino
+6,2020-08-02,Genoa,Verona
+7,2020-08-02,Lecce,Parma
+8,2020-08-02,Sassuolo,Udinese
+9,2020-08-02,Go Ahead Eagles,Telstar
+10,2020-08-02,OH Leuven,Beerschot
+11,2020-08-02,Celtic,Hamilton Academical
+12,2020-08-02,Bodoe/Glimt,Stroemsgodset
+13,2020-08-02,FK Haugesund,Stabaek
+14,2020-08-02,Sarpsborg 08,Aalesund
+15,2020-08-02,Start,Mjoendalen
+16,2020-08-02,Viking,Kristiansund BK
+17,2020-08-02,Odds Ballklubb,Rosenborg
+18,2020-08-02,Brattvaag,Senja
+19,2020-08-02,Egersund,Nardo
+20,2020-08-02,Bryne,Notodden
+21,2020-08-02,Rosenborg BK,Klepp
+22,2020-08-02,Avaldsnes,Sandviken
+23,2020-08-02,Helsingborg,Hammarby
+24,2020-08-02,Kalmar FF,AIK
+25,2020-08-02,IFK Gothenburg,Malmoe FF
+26,2020-08-02,Varbergs BoIS FC,Oestersunds FK
+27,2020-08-02,IK Brage,IFK Norrkoeping
+28,2020-08-02,Norrby,Joenkoepings Soedra
+29,2020-08-02,Akropolis IF,GAIS
+30,2020-08-02,Oestersunds FK,Oesters IF
+31,2020-08-02,Skiljebo SK,Karlslunds IF HFK
+32,2020-08-02,Vaertans IK,FC Gute
+33,2020-08-02,IF Karlstad Fotbollutveckling,IFK Aamaal
+34,2020-08-02,Kvarnsvedens IK,Sandvikens IF
+35,2020-08-02,Kristianstads DFF,Umeaa IK
+36,2020-08-02,FC Rosengaard,Piteaa IF
+37,2020-08-02,Vaexjoe,Djurgaarden
+38,2020-08-02,KIF Oerebro,Vittsjoe GIK
+39,2020-08-02,SJK Akatemia,IF Gnistan
+40,2020-08-02,MP,MuSa
+41,2020-08-02,FC Kiffen,Honka (A)
+42,2020-08-02,Kultsu,Mikkelin Kissat
+43,2020-08-02,Espoo,Klubi 04
+44,2020-08-02,Ilves II,TPV Tampere
+45,2020-08-02,GrIFK Grankulla,Atlantis
+46,2020-08-02,GrIFK Grankulla,Pallo-Iirot
+47,2020-08-02,HJS Akatemia,Klubi 04
+48,2020-08-02,FC Kiisto,GBK
+49,2020-08-02,Kemi City FC,JIPPO
+50,2020-08-02,OLS,JS Hercules
+51,2020-08-02,VIFK,OLS
+52,2020-08-02,WSG Swarovski Tirol II,Schwaz
+53,2020-08-02,FC Wolfurt,Rotenberg
+54,2020-08-02,Chiasso,FC Stade Lausanne-Ouchy
+55,2020-08-02,Grasshoppers,Winterthur
+56,2020-08-02,Kriens,FC Vaduz
+57,2020-08-02,Lausanne,Wil
+58,2020-08-02,Schaffhausen,Aarau
+59,2020-08-02,Cork City,Bohemian FC
+60,2020-08-02,Shamrock Rovers II,Drogheda United
+61,2020-08-02,Shinnik Yaroslavl,Torpedo Moscow
+62,2020-08-02,Krylya Sovetov Samara,Baltika
+63,2020-08-02,HNK Orijent 1919,NK Istra 1961
+64,2020-08-02,CSM Politehnica Iasi,Chindia Targoviste
+65,2020-08-02,FC Voluntari,Dinamo Bucuresti
+66,2020-08-02,CS Mioveni,Petrolul Ploiesti
+67,2020-08-02,FC Arges Pitesti,UTA Arad
+68,2020-08-02,Rapid Bucuresti,Turris-Oltul
+69,2020-08-02,Ludogorets Razgrad,Lokomotiv Plovdiv
+70,2020-08-02,Torpedo Zhodino,BATE Borisov
+71,2020-08-02,FC Minsk,Rukh Brest
+72,2020-08-02,FK Gorodeya,Energetik-BGU
+73,2020-08-02,Neman Grodno Reserve,Dinamo Minsk Reserve
+74,2020-08-02,Lubana Degumnieki MBJSS,Kalupe
+75,2020-08-02,Talsu NSS,DVSK Traktors
+76,2020-08-02,Suduva,FK Panevezys
+77,2020-08-02,Zalgiris Vilnius,FK Kauno Zalgiris
+78,2020-08-02,FK Atmosfera,Lietava Jonava
+79,2020-08-02,Dainava Alytus,Nevezis
+80,2020-08-02,FCI Levadia,Tulevik Viljandi
+81,2020-08-02,Kompanii Marjamaa,Teleios
+82,2020-08-02,Saku Sporting,JK Kadakas Kernu
+83,2020-08-02,Viimsi Lovid,Parnu JK Vaprus
+84,2020-08-02,Dinamo-Auto,Zimbru
+85,2020-08-02,FK Krupa,FK Sarajevo
+86,2020-08-02,Siroki Brijeg,FK Tuzla City
+87,2020-08-02,Hapoel Afula,Hapoel Marmorek
+88,2020-08-02,KF Tirana,Teuta Durres
+89,2020-08-02,HB Torshavn,NSI Runavik
+90,2020-08-02,Skala,Klaksvik
+91,2020-08-02,Vikingur,EB/Streymur
+92,2020-08-02,AB Argir,TB Tvoeroyri
+93,2020-08-02,B36 Torshavn,Fuglafjoerdur
+94,2020-08-02,Bragantino,Botafogo SP
+95,2020-08-02,Corinthians,Mirassol
+96,2020-08-02,Atletico Alagoinhas,Juazeirense
+97,2020-08-02,Bahia,EC Jacuipense
+98,2020-08-02,Chapecoense AF,Criciuma
+99,2020-08-02,Juventus SC,Brusque
+100,2020-08-02,Caldense,Tombense FC
+101,2020-08-02,Atletico MG,America MG
+102,2020-08-02,Salgueiro,Santa Cruz
+103,2020-08-02,AO Itabaiana,Sergipe
+104,2020-08-02,Chico FC,America de Cali
+105,2020-08-02,Cucuta,Deportivo Pereira
+106,2020-08-02,Tolima,Atlético Bucaramanga
+107,2020-08-02,Deportivo Cali,Patriotas
+108,2020-08-02,Deportivo Pasto,Alianza Petrolera
+109,2020-08-02,Independiente Medellin,Junior FC
+110,2020-08-02,CD Jaguares,Atlético Nacional
+111,2020-08-02,La Equidad,Millonarios FC SA
+112,2020-08-02,Once Caldas,Envigado
+113,2020-08-02,Santa Fe,Rionegro Aguilas
+114,2020-08-02,Delfin,Aucas
+115,2020-08-02,Emelec,Orense
+116,2020-08-02,LDU Portoviejo,El Nacional
+117,2020-08-02,LDU de Quito,Deportivo Cuenca
+118,2020-08-02,Mushuc Runa,Independiente del Valle
+119,2020-08-02,Olmedo,Guayaquil City
+120,2020-08-02,Tecnico Universitario,Barcelona SC
+121,2020-08-02,Universidad Catolica,CSD Macara
+122,2020-08-02,Libertad,Guarani
+123,2020-08-02,Cerro Porteno,Sportivo San Lorenzo
+124,2020-08-02,Tigres UANL,Pachuca
+125,2020-08-02,CF America,Tijuana
+126,2020-08-02,Toluca,Atletico de San Luis
+127,2020-08-02,San Jose Earthquakes,Minnesota United
+128,2020-08-02,New York City FC,Portland Timbers
+129,2020-08-02,Hartford Athletic,Indy Eleven
+130,2020-08-02,Indy Eleven,Sporting Kansas City II
+131,2020-08-02,North Carolina FC,Birmingham Legion
+132,2020-08-02,Pittsburgh Riverhounds,Philadelphia Union II
+133,2020-08-02,Colorado Springs Switchbacks FC,Portland Timbers II
+134,2020-08-02,Colorado Springs Switchbacks FC,Real Monarchs SLC
+135,2020-08-02,OKC Energy FC,Las Vegas Lights FC
+136,2020-08-02,OKC Energy FC,New Mexico United
+137,2020-08-02,Saint Louis FC,Birmingham Legion
+138,2020-08-02,Memphis 901,Saint Louis FC
+139,2020-08-02,Rio Grande Valley FC,Orange County SC
+140,2020-08-02,San Antonio FC,Sacramento Republic FC
+141,2020-08-02,Austin Bold,San Antonio FC
+142,2020-08-02,Rio Grande Valley FC,FC Tulsa
+143,2020-08-02,LA Galaxy II,El Paso Locomotive
+144,2020-08-02,San Diego Loyal,Sacramento Republic FC
+145,2020-08-02,Tacoma Defiance,New Mexico United
+146,2020-08-02,Las Vegas Lights FC,Reno 1868 FC
+147,2020-08-02,Phoenix Rising FC,El Paso Locomotive
+148,2020-08-02,Phoenix Rising FC,FC Tulsa
+149,2020-08-02,Reno 1868 FC,Real Monarchs SLC
+150,2020-08-02,Philadelphia Union II,Tampa Bay Rowdies
+151,2020-08-02,New York Red Bulls II,North Carolina FC
+152,2020-08-02,Richmond Kickers,Fort Lauderdale CF
+153,2020-08-02,Fort Lauderdale CF,Chattanooga Red Wolves SC
+154,2020-08-02,South Georgia Tormenta FC,Forward Madison FC
+155,2020-08-02,South Georgia Tormenta FC,Orlando City B
+156,2020-08-02,Union Omaha,North Texas SC
+157,2020-08-02,North Carolina Courage,Portland Thorns
+158,2020-08-02,Washington Spirit,Houston Dash
+159,2020-08-02,Orlando Pride,Utah Royals
+160,2020-08-02,Antigua Guatemala,Iztapa
+161,2020-08-02,CSD Municipal,Coban Imperial
+162,2020-08-02,Club Xelaju,Comunicaciones FC
+163,2020-08-02,Santa Lucia Cotzumalguapa,Deportivo Malacateco
+164,2020-08-02,Managua FC,Junior de Managua
+165,2020-08-02,Real Esteli,Deportivo Ocotal
+166,2020-08-02,Walter Ferretti,Real Madriz
+167,2020-08-02,Real Esteli U20,Deportivo Ocotal U20
+168,2020-08-02,Jalapa U20,Juventus Managua U20
+169,2020-08-02,Atletico Ottawa,Cavalry FC
+170,2020-08-02,York 9 FC,Forge FC
+171,2020-08-02,Valour FC,FC Edmonton
+172,2020-08-02,Consadole Sapporo,Vissel Kobe
+173,2020-08-02,Matsumoto Yamaga,Giravanz Kitakyushu
+174,2020-08-02,Tochigi SC,Albirex Niigata
+175,2020-08-02,V-Varen Nagasaki,Tokyo Verdy
+176,2020-08-02,Ventforet Kofu,Renofa Yamaguchi
+177,2020-08-02,Kyoto Sanga FC,Machida Zelvia
+178,2020-08-02,Ehime FC,Jubilo Iwata
+179,2020-08-02,JEF United Chiba,Thespakusatsu Gunma
+180,2020-08-02,Mito Hollyhock,Zweigen Kanazawa
+181,2020-08-02,Omiya Ardija,Avispa Fukuoka
+182,2020-08-02,Tokushima Vortis,Montedio Yamagata
+183,2020-08-02,Grulla Morioka,Cerezo Osaka U23
+184,2020-08-02,Imabari FC,Vanraure Hachinohe
+185,2020-08-02,Fujieda MYFC,FC Gifu
+186,2020-08-02,SC Sagamihara,Kagoshima United
+187,2020-08-02,YSCC,Blaublitz Akita
+188,2020-08-02,Kamatamare Sanuki,Azul Claro Numazu
+189,2020-08-02,Nagano Parceiro,Gamba Osaka U23
+190,2020-08-02,Roasso Kumamoto,Fukushima United
+191,2020-08-02,Gainare Tottori,Kataller Toyama
+192,2020-08-02,Shanghai SIPG FC,Hebei CFFC
+193,2020-08-02,Chongqing Lifan,Tianjin Teda
+194,2020-08-02,Busan I'Park,Ulsan Hyundai
+195,2020-08-02,Gangwon FC,Sangju Sangmu
+196,2020-08-02,Suwon Bluewings,Daegu FC
+197,2020-08-02,Ulsan Hyundai,Sangju Sangmu
+198,2020-08-02,FC Seoul,Incheon United
+199,2020-08-02,Suwon Bluewings,Gwangju FC
+200,2020-08-02,Gyeongnam FC,FC Anyang
+201,2020-08-02,Seoul E-Land FC,Bucheon FC 1995
+202,2020-08-02,Electricite du Cambodge FC,Boeung Ket
+203,2020-08-02,National Police Commissary FC,National Sports Academy
+204,2020-08-02,Svay Rieng,Visakha
+205,2020-08-02,Saburtalo,Dila Gori
+206,2020-08-02,Dinamo Batumi,Samtredia
+207,2020-08-02,Mes Rafsanjan,Fajr Sepasi
+208,2020-08-02,Qashqai,Arman Gahar Sirjan
+209,2020-08-02,Aluminium Arak,Malavan
+210,2020-08-02,Baadraan Tehran,Navad Urmia
+211,2020-08-02,Niroye Zamini,Mes Kerman
+212,2020-08-02,Rayka Babol,Havadar SC
+213,2020-08-02,Sepidrood Rasht,Khooshe Talaee Sana Saveh
+214,2020-08-02,Elmoadab Tabriz,Damash
+215,2020-08-02,Esteghlal Khuzestan,Gol Reyhan Alborz
+216,2020-08-02,Ayeyawady United FC,Yadanarbon FC
+217,2020-08-02,ISPE FC,Southern Myanmar FC
+218,2020-08-02,Chin United FC,Yadanarbon FC
+219,2020-08-02,Al-Khor,Al-Wakra
+220,2020-08-02,Al-Gharafa,Al-Duhail SC
+221,2020-08-02,Tainan City,Hang Yuen
+222,2020-08-02,Taipei Red Lions,Taichung Futuro
+223,2020-08-02,Taipei Tatung,Ming Chuan University
+224,2020-08-02,Taipower,NTUPES
+225,2020-08-02,Newcastle Jets,Western United FC
+226,2020-08-02,Peninsula Power,Brisbane Roar FC Youth
+227,2020-08-02,Gold Coast United FC,Moreton Bay United
+228,2020-08-02,Sunshine Coast Wanderers,Olympic FC
+229,2020-08-02,Gungahlin United,Belconnen United
+230,2020-08-02,Gungahlin United,Tigers FC
+231,2020-08-02,Tigers FC,Canberra FC
+232,2020-08-02,Tuggeranong United,Canberra Olympic
+233,2020-08-02,Adamstown Rosebud FC,Weston Workers
+234,2020-08-02,Broadmeadow Magic,Edgeworth Eagles
+235,2020-08-02,Charlestown Azzurri,Lake Macquarie
+236,2020-08-02,Charlestown Azzurri,Weston Workers
+237,2020-08-02,Maitland,Valentine Phoenix
+238,2020-08-02,South Hobart,Launceston City
+239,2020-08-02,Wairarapa United,Lower Hutt City
+240,2020-08-02,Western Suburbs,Petone
+241,2020-08-02,Raja Casablanca,Youssoufia Berrechid
+242,2020-08-02,Neman Grodno (w),FK Minsk (w)
+243,2020-08-02,Bobruichanka (w),Dinamo BGU (w)
+244,2020-08-02,,
+0,2020-08-03,Roda JC Kerkrade,FC Eindhoven
+1,2020-08-03,Ross County,Motherwell
+2,2020-08-03,Salzburg,NK Bravo
+3,2020-08-03,Aasane,Tromsoe
+4,2020-08-03,Grorud,Ull/Kisa
+5,2020-08-03,Hamarkameratene,KFUM
+6,2020-08-03,Kongsvinger,Oeygarden FK
+7,2020-08-03,Raufoss,Stroemmen
+8,2020-08-03,Sandnes,Ranheim
+9,2020-08-03,Stjoerdals Blink,Jerv
+10,2020-08-03,Kvik Halden,Vaalerenga 2
+11,2020-08-03,Odds Ballklubb 2,Levanger
+12,2020-08-03,Odds Ballklubb 2,Sotra Sportsklubb
+13,2020-08-03,Rosenborg 2,Asker
+14,2020-08-03,Nardo,Rosenborg 2
+15,2020-08-03,Elfsborg,Sirius
+16,2020-08-03,IFK Norrkoeping,Mjaellby
+17,2020-08-03,Umeaa,Dalkurd FF
+18,2020-08-03,IK Brage,Trelleborgs FF
+19,2020-08-03,Oergryte IS,Vaesteraas SK
+20,2020-08-03,Eskilstuna United DFF,IK Uppsala Fotboll
+21,2020-08-03,Kopparbergs/Goeteborg,Linkoepings FC
+22,2020-08-03,FC Lahti,Honka
+23,2020-08-03,Basel,Luzern
+24,2020-08-03,FC Zuerich,Thun
+25,2020-08-03,Servette,Sion
+26,2020-08-03,Xamax,Lugano
+27,2020-08-03,Young Boys,St. Gallen
+28,2020-08-03,St. Patrick's Athletic,Derry City
+29,2020-08-03,Longford Town,Bray Wanderers
+30,2020-08-03,Galway United FC,Athlone Town
+31,2020-08-03,Afturelding,Thor Akureyri
+32,2020-08-03,Magni,Throttur Reykjavik
+33,2020-08-03,Fram Reykjavik,Vestri
+34,2020-08-03,Leiknir Reykjavik,UMF Leiknir Faskrudsfjoerdur
+35,2020-08-03,KR (w),Valur (w)
+36,2020-08-03,Cherkashchyna,Volyn
+37,2020-08-03,FC Balkany,Obolon-Brovar
+38,2020-08-03,Inhulets Petrove,FC Kremin Kremenchuk
+39,2020-08-03,Ahrobiznes Volochysk,MFK Mykolaiv
+40,2020-08-03,FC Hirnyk-Sport,FC Avanhard Kramatorsk
+41,2020-08-03,Metalurg Zaporizhia,FC Prykarpattia 1981
+42,2020-08-03,Metalist 1925,Chornomorets Odesa
+43,2020-08-03,Rukh Lviv,FC Minaj
+44,2020-08-03,FC FCSB,Astra Giurgiu
+45,2020-08-03,CS Universitatea Craiova,CFR Cluj
+46,2020-08-03,BFC Daugavpils,FK Tukums 2000
+47,2020-08-03,FK Jelgava,FS Metta/LU
+48,2020-08-03,FK Spartaks,RFS
+49,2020-08-03,Valmiera FC,Ventspils
+50,2020-08-03,FK Liepaja,Riga FC
+51,2020-08-03,Upesciems,FK Limbazi
+52,2020-08-03,Parnu JK,Flora Tallinn
+53,2020-08-03,Palmeiras,Ponte Preta
+54,2020-08-03,Uberlandia,Boa Esporte Clube
+55,2020-08-03,Guairena,Olimpia
+56,2020-08-03,Queretaro FC,Mazatlan FC
+57,2020-08-03,Santos,CD Guadalajara
+58,2020-08-03,Hartford Athletic,Loudoun United
+59,2020-08-03,OL Reign,Chicago Red Stars
+60,2020-08-03,Jalapa FC,Juventus Managua
+61,2020-08-03,Diriangen FC,Chinandega
+62,2020-08-03,Diriangen U20,Chinandega U20
+63,2020-08-03,HFX Wanderers FC,Pacific FC
+64,2020-08-03,Binh Duong,Viettel
+65,2020-08-03,Ha Noi FC,FLC Thanh Hoa
+66,2020-08-03,Hai Phong,Song Lam Nghe An
+67,2020-08-03,Hoang Anh Gia Lai,Ho Chi Minh City FC
+68,2020-08-03,Hong Linh Ha Tinh,QNK Quang Nam
+69,2020-08-03,Nam Dinh,Da Nang
+70,2020-08-03,Saigon FC,Than Quang Ninh
+71,2020-08-03,Sioni Bolnisi,Merani Martvili
+72,2020-08-03,WIT Georgia Tbilisi,FC Gagra
+73,2020-08-03,Al-Ahli,Al-Sadd
+74,2020-08-03,Qatar SC,Umm Salal
+75,2020-08-03,AGMK,Lokomotiv Tashkent
+76,2020-08-03,Bunyodkor Tashkent,Metallurg Bekobod
+77,2020-08-03,Nasaf Qarshi,Sogdiyona Jizzax
+78,2020-08-03,Melbourne Victory,Central Coast Mariners
+79,2020-08-03,,
+0,2020-08-04,Brentford,Fulham
+1,2020-08-04,Dijon,Strasbourg
+2,2020-08-04,Lorient,Rennes
+3,2020-08-04,Rodez,Nimes
+4,2020-08-04,Toulouse,Bordeaux
+5,2020-08-04,Lillestroem,Sogndal
+6,2020-08-04,FC Rosengaard,Landskrona BoIS
+7,2020-08-04,Kristianstad FC,Torns IF
+8,2020-08-04,Stenungsunds IF,FC Trollhaettan
+9,2020-08-04,FCV,JJK
+10,2020-08-04,VIFK,JBK
+11,2020-08-04,Finn Harps,Shelbourne
+12,2020-08-04,Sligo Rovers,Waterford FC
+13,2020-08-04,KA Akureyri,HK Kopavogs
+14,2020-08-04,Breidablik,Stjarnan
+15,2020-08-04,Fylkir,Vikingur Reykjavik
+16,2020-08-04,Grotta,KR Reykjavik
+17,2020-08-04,IBV Vestmannaeyjar,Keflavik
+18,2020-08-04,Vikingur Olafsvik,Grindavik
+19,2020-08-04,FK Tente,Krimulda
+20,2020-08-04,Dainava Alytus,FK Riteriai
+21,2020-08-04,Zalgiris Vilnius,FK Kauno Zalgiris
+22,2020-08-04,Hegelmann Litauen,FK Panevezys
+23,2020-08-04,Vilniaus Vytis,Suduva Marijampole
+24,2020-08-04,Codru,Speranta
+25,2020-08-04,Atlas,Pumas
+26,2020-08-04,Leon,Monterrey
+27,2020-08-04,Portland Timbers II,Tacoma Defiance
+28,2020-08-04,Shenzhen FC,Guangzhou Evergrande
+29,2020-08-04,Jiangsu Suning FC,Dalian Professional FC
+30,2020-08-04,Hue,Binh Phuoc
+31,2020-08-04,Can Tho,An Giang
+32,2020-08-04,Dak Lak,Ba Ria Vung Tau FC
+33,2020-08-04,Pho Hien,Binh Dinh
+34,2020-08-04,Khanh Hoa Nha Trang,Dong Thap Cao Lanh
+35,2020-08-04,Tay Ninh,Long An
+36,2020-08-04,FC Shevardeni 1906,FC Zugdidi
+37,2020-08-04,FC Rustavi,FC Shukura Kobuleti
+38,2020-08-04,Kokand 1912,Pakhtakor Tashkent
+39,2020-08-04,Mashal Muborak,Andijon
+40,2020-08-04,Qizilqum Zarafshon,Buxoro
+41,2020-08-04,Western Sydney Wanderers FC,Perth Glory
+42,2020-08-04,Casuarina,University Azzurri FC
+43,2020-08-04,,
+0,2020-08-05,FC Koebenhavn,Istanbul Basaksehir
+1,2020-08-05,Shakhtar Donetsk,Wolfsburg
+2,2020-08-05,Inter,Getafe
+3,2020-08-05,Manchester United,LASK
+4,2020-08-05,Lens,Union St.Gilloise
+5,2020-08-05,Lens,Paris FC
+6,2020-08-05,Paris Saint-Germain,Sochaux
+7,2020-08-05,Molde,Start
+8,2020-08-05,Hammarby,Falkenbergs FF
+9,2020-08-05,Malmoe FF,Helsingborg
+10,2020-08-05,Varbergs BoIS FC,Djurgaarden
+11,2020-08-05,Haka,HIFK
+12,2020-08-05,IFK Mariehamn,FC Inter
+13,2020-08-05,Ilves,RoPS
+14,2020-08-05,SJK,KuPS
+15,2020-08-05,AC Kajaani,AC Oulu
+16,2020-08-05,FC KTP,MYPA
+17,2020-08-05,FF Jaro,VPS
+18,2020-08-05,KPV,SJK Akatemia
+19,2020-08-05,Winterthur,Bavois
+20,2020-08-05,FH Hafnarfjordur,Valur
+21,2020-08-05,Fjoelnir,IA Akranes
+22,2020-08-05,NK Istra 1961,HNK Orijent 1919
+23,2020-08-05,Backa Backa Palanka,FK Spartak Subotica
+24,2020-08-05,FK Crvena Zvezda,Radnicki Nis
+25,2020-08-05,FK Metalac,Macva Sabac
+26,2020-08-05,FK Radnik Surdulica,Mladost Lucani
+27,2020-08-05,Indjija,Vozdovac
+28,2020-08-05,Javor,Napredak
+29,2020-08-05,Novi Pazar,Partizan Beograd
+30,2020-08-05,Rad Beograd,TSC Backa Topola
+31,2020-08-05,Vojvodina,Cukaricki
+32,2020-08-05,Zlatibor,Proleter
+33,2020-08-05,Chindia Targoviste,FC Voluntari
+34,2020-08-05,Dinamo Bucuresti,FC Viitorul Constanta
+35,2020-08-05,Hermannstadt,CSM Politehnica Iasi
+36,2020-08-05,Sepsi OSK,FC Academica Clinceni
+37,2020-08-05,Belshina Reserve,Slutsk Reserve
+38,2020-08-05,Shakhtyor Reserve,Dinamo Brest Reserve
+39,2020-08-05,FC Milsami Orhei,Dinamo-Auto
+40,2020-08-05,FC Sheriff,CS Petrocub
+41,2020-08-05,07 Vestur,B36 Torshavn II
+42,2020-08-05,NSI Runavik II,FC Hoyvik
+43,2020-08-05,HB Torshavn II,AB Argir II
+44,2020-08-05,Vikingur II,Klaksvik II
+45,2020-08-05,Bahia,Ceara
+46,2020-08-05,Brusque,Juventus SC
+47,2020-08-05,Criciuma,Chapecoense AF
+48,2020-08-05,Concordia Atletico,Atletico Tubarao
+49,2020-08-05,Tombense FC,Caldense
+50,2020-08-05,Campinense,Sousa
+51,2020-08-05,Treze,Botafogo PB
+52,2020-08-05,Freipaulistano,Confianca
+53,2020-08-05,Alianza Petrolera,Cucuta
+54,2020-08-05,America de Cali,Deportivo Cali
+55,2020-08-05,Junior FC,Santa Fe
+56,2020-08-05,Atlético Nacional,Chico FC
+57,2020-08-05,Atlético Bucaramanga,Deportivo Pasto
+58,2020-08-05,Deportivo Pereira,La Equidad
+59,2020-08-05,Envigado,Tolima
+60,2020-08-05,Millonarios FC SA,CD Jaguares
+61,2020-08-05,Patriotas,Independiente Medellin
+62,2020-08-05,Rionegro Aguilas,Once Caldas
+63,2020-08-05,Sol de America,12 de Octubre
+64,2020-08-05,Kashima Antlers,Kawasaki Frontale
+65,2020-08-05,Shimizu S-Pulse,Nagoya Grampus Eight
+66,2020-08-05,Cerezo Osaka,Urawa Red Diamonds
+67,2020-08-05,Urawa Red Diamonds,Matsumoto Yamaga
+68,2020-08-05,Consadole Sapporo,Sanfrecce Hiroshima
+69,2020-08-05,Sagan Tosu,Yokohama FC
+70,2020-08-05,Kashiwa Reysol,Shonan Bellmare
+71,2020-08-05,Oita Trinita,Gamba Osaka
+72,2020-08-05,Shandong Luneng,Shanghai Shenhua
+73,2020-08-05,Henan Jianye,Guangzhou R&F F.C.
+74,2020-08-05,FC Samgurali Tskhaltubo,Aragvi Dusheti
+75,2020-08-05,Surkhon-2011,Navbahor Namangan
+76,2020-08-05,Wellington Phoenix,Brisbane Roar FC
+77,2020-08-05,Newcastle Olympic,Broadmeadow Magic
+78,2020-08-05,Lake Macquarie,Adamstown Rosebud FC
+79,2020-08-05,Valentine Phoenix,Lambton Jaffas FC
+80,2020-08-05,Weston Workers,Maitland
+81,2020-08-05,MAT Tetouan,Raja Casablanca
+82,2020-08-05,,
+0,2020-08-06,Bayer Leverkusen,Rangers
+1,2020-08-06,Sevilla,Roma
+2,2020-08-06,Basel,Eintracht Frankfurt
+3,2020-08-06,Wolverhampton Wanderers,Olympiacos
+4,2020-08-06,AIK,Elfsborg
+5,2020-08-06,Haecken,IFK Norrkoeping
+6,2020-08-06,IFK Gothenburg,Oestersunds FK
+7,2020-08-06,Kalmar FF,Oerebro
+8,2020-08-06,Mjaellby,Sirius
+9,2020-08-06,HJK,FC Lahti
+10,2020-08-06,TPS,Honka
+11,2020-08-06,IF Gnistan,MP
+12,2020-08-06,MuSa,EIF
+13,2020-08-06,FC Rapperswil-Jona,Sion
+14,2020-08-06,Luzern,Young Boys
+15,2020-08-06,Breidablik UBK (w),UMF Stjarnan (w)
+16,2020-08-06,FH (w),Fylkir (w)
+17,2020-08-06,KR (w),IBV (w)
+18,2020-08-06,Selfoss (w),Valur (w)
+19,2020-08-06,Thróttur Reykjavík (w),Thor/KA (w)
+20,2020-08-06,Belshina Bobruisk,FK Slutsk
+21,2020-08-06,Shakhtyor Soligorsk,Dynamo Brest
+22,2020-08-06,Dinamo Minsk Reserve,FK Smolevichy STI Reserve
+23,2020-08-06,Vitebsk Reserve,Isloch Reserve
+24,2020-08-06,FK Karosta,Jurmalas SS
+25,2020-08-06,Parnu JK Vaprus,Nomme United
+26,2020-08-06,FC Sfintul Gheorghe,Dacia Buiucani
+27,2020-08-06,Zimbru,FC Floresti
+28,2020-08-06,AB Argir,Skala
+29,2020-08-06,B36 Torshavn,TB Tvoeroyri
+30,2020-08-06,EB/Streymur,Klaksvik
+31,2020-08-06,Fuglafjoerdur,NSI Runavik
+32,2020-08-06,Vikingur,HB Torshavn
+33,2020-08-06,America MG,Atletico MG
+34,2020-08-06,Santa Cruz,Salgueiro
+35,2020-08-06,Sergipe,Confianca
+36,2020-08-06,Guarani,Club River Plate
+37,2020-08-06,Philadelphia Union,New York City FC/Portland Timbers
+38,2020-08-06,Atlanta United II,Charleston Battery
+39,2020-08-06,Philadelphia Union II,New York Red Bulls II
+40,2020-08-06,Birmingham Legion,Charlotte Independence
+41,2020-08-06,Saint Louis FC,Sporting Kansas City II
+42,2020-08-06,Memphis 901,Pittsburgh Riverhounds
+43,2020-08-06,LA Galaxy II,OKC Energy FC
+44,2020-08-06,Greenville Triumph SC,South Georgia Tormenta FC
+45,2020-08-06,Tianjin Teda,Beijing Guoan
+46,2020-08-06,Qingdao Huanghai,Shanghai SIPG FC
+47,2020-08-06,Torpedo Kutaisi,FC Telavi
+48,2020-08-06,Sogdiyona Jizzax,Bunyodkor Tashkent
+49,2020-08-06,Adelaide United,Sydney FC
+50,2020-08-06,El Zamalek,Al Masry
+51,2020-08-06,RSB Berkane,Wydad Casablanca

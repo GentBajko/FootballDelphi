@@ -8,7 +8,7 @@ start_stats = perf_counter()
 
 class Stats:
 
-    # TODO: Poisson Distribution conceeded. Maybe (Pmf Avg + Pmf Cond) / 2
+    # TODO: Poisson Distribution conceeded. Maybe (Pmf Avg + Pmf Cond) / 2 and stats for upcoming matches
 
     def __init__(self):
         self.data = pd.read_csv('data/dataset.csv')

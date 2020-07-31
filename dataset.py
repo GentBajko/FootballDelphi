@@ -13,9 +13,8 @@ class Dataset:
     def __init__(self, objects=None):
         self.objects = competitions if objects is None else objects
         self.championships = {league: API(league).export().data for league in self.objects.keys()}
-        self.data = pd.concat(
-            [self.championships[df] for df in self.championships],
-            join="outer", ignore_index=True).drop_duplicates()
+        self.data = pd.concat([self.championships[df] for df in self.championships],
+                              ignore_index=True).drop_duplicates()
         self.data['winner'] = self.data['winner'].map({'HOME_TEAM': 1, 'AWAY_TEAM': 2, 'DRAW': 3})
         self.data['duration'] = self.data['duration'].map({'REGULAR': 1, 'PENALTY_SHOOTOUT': 2})
 
