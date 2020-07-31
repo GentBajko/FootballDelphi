@@ -24,8 +24,11 @@ class Scraper:
         self.data = pd.DataFrame()
 
     def scrape(self):
+        # TODO: Try Except Value Error Finally driver.close()
         for url in self.urls:
             self.driver.get(url)
+            self.driver.execute_script("window.scrollBy(0,10000);")
+            self.driver.execute_script("window.scrollBy(0,10000);")
             self.driver.execute_script("window.scrollBy(0,10000);")
             self.driver.execute_script("window.scrollBy(0,10000);")
             self.driver.execute_script("window.scrollBy(0,10000);")
@@ -39,10 +42,12 @@ class Scraper:
                               self.driver.find_elements_by_xpath('//span[@class="hom"]')]
                 away_score = [element.text for element in
                               self.driver.find_elements_by_xpath('//span[@class="awy"]')]
-                print(len(home_team), len(home_score))
                 new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team,
                                          'homeTeamFt': home_score, 'awayTeamFt': away_score})
-                print(new_data)
+                if 'livescore' not in os.listdir(os.path.join(os.getcwd(), 'data')):
+                    os.mkdir('data/livescore')
+                new_data.to_csv(f'data/livescore/{url[33:len(url)]}.csv', encoding='utf-8')
+                print(url[33:len(url)])
                 if not self.data.empty:
                     self.data = pd.concat([self.data, new_data])
                 else:
