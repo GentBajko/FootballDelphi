@@ -20,47 +20,83 @@ class Scraper:
                      for day in range(int((self.end_date - self.start_date).days)))
         self.options = webdriver.ChromeOptions()
         self.options.headless = True
-        self.driver = webdriver.Chrome(os.path.join(os.getcwd(), 'chromedriver.exe'), options=self.options)
+        self.driver = webdriver.Chrome(os.path.join(os.getcwd(), 'chromedriver'), options=self.options)
         self.data = pd.DataFrame()
 
     def scrape(self):
         # TODO: Try Except Value Error Finally driver.close()
         for url in self.urls:
-            self.driver.get(url)
-            self.driver.execute_script("window.scrollBy(0,10000);")
-            self.driver.execute_script("window.scrollBy(0,10000);")
-            self.driver.execute_script("window.scrollBy(0,10000);")
-            self.driver.execute_script("window.scrollBy(0,10000);")
-            self.driver.execute_script("window.scrollBy(0,10000);")
-            home_team = [element.text for element in
-                         self.driver.find_elements_by_xpath('//div[@class="ply tright name"]')]
-            away_team = [element.text for element in
-                         self.driver.find_elements_by_xpath('//div[@class="ply name"]')]
-            date = [url[33:len(url)] for _ in home_team]
-            if self.method.lower() == 'past':
-                home_score = [element.text for element in
-                              self.driver.find_elements_by_xpath('//span[@class="hom"]')]
-                away_score = [element.text for element in
-                              self.driver.find_elements_by_xpath('//span[@class="awy"]')]
-                new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team,
-                                         'homeTeamFt': home_score, 'awayTeamFt': away_score})
-                if 'livescore' not in os.listdir(os.path.join(os.getcwd(), 'data')):
-                    os.mkdir('data/livescore')
-                new_data.to_csv(f'data/livescore/{url[33:len(url)]}.csv', encoding='utf-8')
-                print(url[33:len(url)])
-                if not self.data.empty:
-                    self.data = pd.concat([self.data, new_data])
-                else:
-                    self.data = self.data.append(new_data, ignore_index=True)
-            elif self.method.lower() == 'upcoming':
-                new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team})
-                if not self.data.empty:
-                    self.data = pd.concat([self.data, new_data])
-                else:
-                    self.data = self.data.append(new_data, ignore_index=True)
-                print(new_data)
+            try:
+                self.driver.get(url)
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                home_team = [element.text for element in
+                             self.driver.find_elements_by_xpath('//div[@class="ply tright name"]')]
+                away_team = [element.text for element in
+                             self.driver.find_elements_by_xpath('//div[@class="ply name"]')]
+                date = [url[33:len(url)] for _ in home_team]
+                if self.method.lower() == 'past':
+                    home_score = [element.text for element in
+                                  self.driver.find_elements_by_xpath('//span[@class="hom"]')]
+                    away_score = [element.text for element in
+                                  self.driver.find_elements_by_xpath('//span[@class="awy"]')]
+                    new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team,
+                                             'homeTeamFt': home_score, 'awayTeamFt': away_score})
+                    if 'livescore' not in os.listdir(os.path.join(os.getcwd(), 'data')):
+                        os.mkdir('data/livescore')
+                    new_data.to_csv(f'data/livescore/{url[33:len(url)]}.csv', encoding='utf-8')
+                    print(url[33:len(url)])
+                    if not self.data.empty:
+                        self.data = pd.concat([self.data, new_data])
+                    else:
+                        self.data = self.data.append(new_data, ignore_index=True)
+                elif self.method.lower() == 'upcoming':
+                    new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team})
+                    if not self.data.empty:
+                        self.data = pd.concat([self.data, new_data])
+                    else:
+                        self.data = self.data.append(new_data, ignore_index=True)
+                    print(new_data)
+            except ValueError:
+                self.driver.get(url)
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                self.driver.execute_script("window.scrollBy(0,10000);")
+                home_team = [element.text for element in
+                             self.driver.find_elements_by_xpath('//div[@class="ply tright name"]')]
+                away_team = [element.text for element in
+                             self.driver.find_elements_by_xpath('//div[@class="ply name"]')]
+                date = [url[33:len(url)] for _ in home_team]
+                if self.method.lower() == 'past':
+                    home_score = [element.text for element in
+                                  self.driver.find_elements_by_xpath('//span[@class="hom"]')]
+                    away_score = [element.text for element in
+                                  self.driver.find_elements_by_xpath('//span[@class="awy"]')]
+                    new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team,
+                                             'homeTeamFt': home_score, 'awayTeamFt': away_score})
+                    if 'livescore' not in os.listdir(os.path.join(os.getcwd(), 'data')):
+                        os.mkdir('data/livescore')
+                    new_data.to_csv(f'data/livescore/{url[33:len(url)]}.csv', encoding='utf-8')
+                    print(url[33:len(url)])
+                    if not self.data.empty:
+                        self.data = pd.concat([self.data, new_data])
+                    else:
+                        self.data = self.data.append(new_data, ignore_index=True)
+                elif self.method.lower() == 'upcoming':
+                    new_data = pd.DataFrame({'date': date, 'homeTeam': home_team, 'awayTeam': away_team})
+                    if not self.data.empty:
+                        self.data = pd.concat([self.data, new_data])
+                    else:
+                        self.data = self.data.append(new_data, ignore_index=True)
+                    print(new_data)
         self.driver.close()
         self.data = self.data.reset_index().drop('index', axis=1)[:-1]
+
         return self
 
     def export(self):
@@ -73,6 +109,6 @@ class Scraper:
 
 if __name__ == "__main__":
     # scraper = Scraper('2020-07-29', '2020-07-30')
-    scraper = Scraper('past', '2019-08-02', '2020-08-01')
+    scraper = Scraper('past', '2019-08-03', '2020-08-01')
     scraper.scrape()
     print(scraper.data)
